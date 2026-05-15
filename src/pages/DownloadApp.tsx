@@ -60,12 +60,11 @@ const DownloadApp = () => {
               Encuesta
             </Link>
             <a
-              href="https://play.google.com/store/apps/details?id=com.portalsalon202"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/app-release.apk"
+              download
               className="glass-btn text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
             >
-              Descargar App
+              Descargar desde Portal 202
             </a>
           </div>
         </motion.nav>

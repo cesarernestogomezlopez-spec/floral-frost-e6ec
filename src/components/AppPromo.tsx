@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Smartphone,
   Bell,
@@ -10,6 +10,8 @@ import {
   Headphones,
   ChevronDown,
 } from "lucide-react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import appScreenshot from "@/assets/app-screenshot.png";
 import featureHorario from "@/assets/feature-horario.png";
 import featureNotificaciones from "@/assets/feature-notificaciones.png";
@@ -56,8 +58,29 @@ const features = [
   },
 ];
 
+const APK_URL =
+  "https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/app-release.apk";
+
 export const AppPromo = () => {
   const [active, setActive] = useState(0);
+  const [otaOpen, setOtaOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otaState, setOtaState] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleOtaSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setOtaState("loading");
+    try {
+      await addDoc(collection(db, "ota_signups"), {
+        email: email.trim().toLowerCase(),
+        createdAt: serverTimestamp(),
+      });
+      setOtaState("success");
+    } catch {
+      setOtaState("error");
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -87,19 +110,86 @@ export const AppPromo = () => {
             avisos y recursos escolares a donde vayas.
           </p>
 
-          <motion.a
-            href="https://play.google.com/store/apps/details?id=com.portalsalon202"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 glass-strong glow-green rounded-2xl px-8 py-4 font-bold tracking-wide transition"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-              <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
-            </svg>
-            <span className="text-sm sm:text-base">Descargar en Google Play</span>
-          </motion.a>
+          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto">
+            {/* Option 1: Direct APK */}
+            <motion.a
+              href={APK_URL}
+              download
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 flex flex-col items-center gap-2 glass-strong glow-green rounded-2xl px-6 py-5 font-bold tracking-wide transition cursor-pointer text-center"
+            >
+              <span className="text-3xl">📱</span>
+              <span className="text-sm sm:text-base">Descargar directo</span>
+              <span className="text-[10px] text-foreground/50 font-normal tracking-wider uppercase">APK · Portal 202</span>
+            </motion.a>
+
+            {/* Option 2: OTA */}
+            <motion.button
+              onClick={() => setOtaOpen(true)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 flex flex-col items-center gap-2 glass rounded-2xl px-6 py-5 font-bold tracking-wide transition border border-emerald-400/20 text-center"
+            >
+              <span className="text-3xl">📲</span>
+              <span className="text-sm sm:text-base">Descargar + Actualizaciones por OTA</span>
+              <span className="text-[10px] text-foreground/50 font-normal tracking-wider uppercase">Recibe updates automáticos</span>
+            </motion.button>
+          </div>
+
+          {/* OTA email modal */}
+          <AnimatePresence>
+            {otaOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full max-w-md mx-auto mt-2 glass rounded-2xl p-6 border border-emerald-400/20"
+              >
+                {otaState === "success" ? (
+                  <div className="text-center py-2">
+                    <p className="text-2xl mb-2">✅</p>
+                    <p className="font-bold text-sm">¡Listo! Te avisaremos pronto.</p>
+                    <p className="text-xs text-foreground/50 mt-1">Recibirás un correo cuando estés registrado.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleOtaSubmit} className="flex flex-col gap-3">
+                    <p className="text-xs text-foreground/60 leading-relaxed">
+                      Ingresa tu correo y te agregaremos al programa de actualizaciones OTA.
+                    </p>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="tucorreo@ejemplo.com"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm placeholder:text-foreground/30 focus:outline-none focus:border-emerald-400/50"
+                    />
+                    {otaState === "error" && (
+                      <p className="text-xs text-red-400">Algo salió mal, intenta de nuevo.</p>
+                    )}
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setOtaOpen(false)}
+                        className="flex-1 glass rounded-xl py-2 text-xs font-semibold text-foreground/60"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={otaState === "loading"}
+                        className="flex-1 glass-strong glow-green rounded-xl py-2 text-xs font-bold disabled:opacity-50"
+                      >
+                        {otaState === "loading" ? "Enviando..." : "Registrarme"}
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
