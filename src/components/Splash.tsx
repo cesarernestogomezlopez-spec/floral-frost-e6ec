@@ -1,7 +1,8 @@
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 
 export const Splash = () => {
-  return (
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
       initial={{ opacity: 1 }}
@@ -39,6 +40,7 @@ export const Splash = () => {
           />
         </motion.div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
