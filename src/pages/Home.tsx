@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { Splash } from "@/components/Splash";
+import { motion } from "framer-motion";
 import { Schedule } from "@/components/Schedule";
 import { PortalModal } from "@/components/PortalModal";
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     document.title = "Salón 202 · Inicio";
     document.documentElement.removeAttribute("data-theme");
-    const t = setTimeout(() => setLoading(false), 1800);
-    return () => clearTimeout(t);
   }, []);
 
   return (
     <>
-      <AnimatePresence>{loading && <Splash key="splash" />}</AnimatePresence>
-
       <main className="relative min-h-screen px-4 sm:px-6 lg:px-10 py-6 max-w-7xl mx-auto">
         {/* ambient orbs */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -30,8 +24,8 @@ const Home = () => {
 
         <motion.nav
           initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: loading ? 0 : 1, y: loading ? -16 : 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 }}
           className="glass rounded-full flex items-center justify-between px-4 sm:px-6 py-3 mb-8"
         >
           <div className="flex items-center gap-3">
@@ -67,8 +61,8 @@ const Home = () => {
 
         <motion.header
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
           className="text-center my-10 sm:my-16"
         >
           <p className="text-[11px] sm:text-xs tracking-[0.5em] uppercase text-foreground/50 mb-3">
@@ -80,17 +74,17 @@ const Home = () => {
         </motion.header>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: loading ? 0 : 1 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.18 }}
         >
           <Schedule />
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: loading ? 0 : 1 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.28 }}
           className="flex justify-center gap-4 mt-12 sm:hidden"
         >
           <Link to="/download-app" className="glass-btn text-xs font-semibold tracking-[0.15em] uppercase">
