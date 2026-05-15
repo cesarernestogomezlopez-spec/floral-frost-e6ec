@@ -177,7 +177,7 @@ export const AppPromo = () => {
               <motion.div
                 key={f.title}
                 onViewportEnter={() => setActive(i)}
-                viewport={{ amount: 0.6, margin: "-30% 0px -30% 0px" }}
+                viewport={{ amount: 0.4, margin: "-15% 0px -15% 0px" }}
                 initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
