@@ -59,7 +59,7 @@ const features = [
 ];
 
 const APK_URL =
-  "https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/app-release.apk";
+  "https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/PORTAL-202.apk";
 
 export const AppPromo = () => {
   const [active, setActive] = useState(0);

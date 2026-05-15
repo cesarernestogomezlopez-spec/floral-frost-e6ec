@@ -60,7 +60,7 @@ const DownloadApp = () => {
               Encuesta
             </Link>
             <a
-              href="https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/app-release.apk"
+              href="https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/PORTAL-202.apk"
               download
               className="glass-btn text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
             >
