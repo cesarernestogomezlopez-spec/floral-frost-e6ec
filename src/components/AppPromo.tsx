@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Smartphone,
@@ -63,9 +63,16 @@ const APK_URL =
 
 export const AppPromo = () => {
   const [active, setActive] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [otaOpen, setOtaOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [otaState, setOtaState] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 320);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   async function handleOtaSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -312,6 +319,44 @@ export const AppPromo = () => {
           </div>
         </div>
       </section>
+
+      {/* Floating download bar */}
+      <AnimatePresence>
+        {scrolled && (
+          <motion.div
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-lg"
+          >
+            <div className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl border border-white/10">
+              <div className="flex-1 flex gap-2">
+                <motion.a
+                  href={APK_URL}
+                  download
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex-1 flex items-center justify-center gap-2 glow-green bg-emerald-500/20 border border-emerald-400/30 rounded-xl py-2.5 text-xs font-bold tracking-wide"
+                >
+                  <span>📱</span>
+                  <span>Descargar directo</span>
+                </motion.a>
+                <motion.button
+                  onClick={() => { setOtaOpen(true); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex-1 flex items-center justify-center gap-2 glass border border-white/10 rounded-xl py-2.5 text-xs font-bold tracking-wide"
+                >
+                  <span>📲</span>
+                  <span className="hidden sm:inline">Actualizaciones OTA</span>
+                  <span className="sm:hidden">OTA</span>
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
