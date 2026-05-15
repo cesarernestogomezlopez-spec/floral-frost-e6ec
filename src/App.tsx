@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Splash } from "@/components/Splash";
 import Home from "./pages/Home";
 import DownloadApp from "./pages/DownloadApp";
 import Survey from "./pages/Survey";
@@ -36,19 +34,7 @@ function AnimatedRoutes() {
 }
 
 function AppContent() {
-  const [splashDone, setSplashDone] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setSplashDone(true), 1800);
-    return () => clearTimeout(t);
-  }, []);
-
-  return (
-    <>
-      <AnimatePresence>{!splashDone && <Splash key="splash" />}</AnimatePresence>
-      <AnimatedRoutes />
-    </>
-  );
+  return <AnimatedRoutes />;
 }
 
 const App = () => (
