@@ -252,7 +252,7 @@ const Survey = () => {
                 Encuestas
               </p>
               <p className="text-base leading-relaxed text-foreground/90">
-                No hay encuestas por el momento, verifica más tarde :'>
+                No hay encuestas por el momento, verifica más tarde :&#39;&gt;
               </p>
 
               <button
