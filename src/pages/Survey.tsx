@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Check,
   ChevronRight,
@@ -48,6 +48,8 @@ const EMPTY_ANSWER: Answer = {
 };
 
 const Survey = () => {
+  const navigate = useNavigate();
+  const [noSurveysOpen, setNoSurveysOpen] = useState(true);
   const [phase, setPhase] = useState<"intro1" | "intro2" | "terms" | "classes" | "success" | "error">("intro1");
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [activeClass, setActiveClass] = useState<string | null>(null);
@@ -224,6 +226,46 @@ const Survey = () => {
           Jefatura de Grupo · 2026
         </footer>
       </div>
+
+      {noSurveysOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div
+            className="absolute inset-0 bg-background/85 backdrop-blur-md"
+            onClick={() => { setNoSurveysOpen(false); navigate("/"); }}
+          />
+          <div className="luxe-card relative w-full max-w-sm rounded-2xl p-1.5 animate-in fade-in zoom-in-95 duration-300">
+            <div className="rounded-[14px] bg-card/95 p-8 backdrop-blur-xl text-center">
+              <button
+                type="button"
+                aria-label="Cerrar"
+                onClick={() => { setNoSurveysOpen(false); navigate("/"); }}
+                className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-input/50 hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)] text-3xl">
+                🥲
+              </div>
+
+              <p className="text-xs uppercase tracking-[0.3em] text-[color:var(--gold)]/90 mb-3">
+                Encuestas
+              </p>
+              <p className="text-base leading-relaxed text-foreground/90">
+                No hay encuestas por el momento, verifica más tarde :'>
+              </p>
+
+              <button
+                type="button"
+                onClick={() => { setNoSurveysOpen(false); navigate("/"); }}
+                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+              >
+                Volver al inicio
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
