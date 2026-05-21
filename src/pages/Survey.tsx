@@ -54,7 +54,7 @@ const Survey = () => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    document.title = "Encuesta · Jefatura de Grupo";
+    document.title = "Encuesta · Jefe de Grupo";
     document.documentElement.setAttribute("data-theme", "survey");
     return () => document.documentElement.removeAttribute("data-theme");
   }, []);
@@ -221,7 +221,7 @@ const Survey = () => {
         </section>
 
         <footer className="mt-auto pt-16 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          Jefatura de Grupo · 2026
+          Jefe de Grupo · 2026
         </footer>
       </div>
 
