@@ -48,7 +48,11 @@ const EMPTY_ANSWER: Answer = {
 };
 
 const Survey = () => {
-  const [phase, setPhase] = useState<"intro1" | "intro2" | "terms" | "classes" | "success" | "error">("intro1");
+  const [phase, setPhase] = useState<
+    | "selection"
+    | "intro1" | "intro2" | "terms" | "classes" | "success" | "error"
+    | "classroom" | "classroom-success" | "classroom-error"
+  >("selection");
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [activeClass, setActiveClass] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -58,6 +62,22 @@ const Survey = () => {
     document.documentElement.setAttribute("data-theme", "survey");
     return () => document.documentElement.removeAttribute("data-theme");
   }, []);
+
+  const handleClassroomSubmit = async (category: string, description: string) => {
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://formspree.io/f/mwvyrvqr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ "Tipo": "Queja del salón", "Categoría": category, "Descripción": description }),
+      });
+      setPhase(res.ok ? "classroom-success" : "classroom-error");
+    } catch {
+      setPhase("classroom-error");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -123,29 +143,37 @@ const Survey = () => {
         {/* Hero */}
         <section className="mx-auto mt-12 max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.4em] text-[color:var(--gold)]/90">
-            {phase === "intro1"
+            {phase === "selection"
+              ? "Encuestas"
+              : phase === "intro1"
               ? "Bienvenida"
               : phase === "intro2"
               ? "¿Cómo funciona?"
               : phase === "terms"
               ? "Términos y Condiciones"
-              : phase === "success"
+              : phase === "success" || phase === "classroom-success"
               ? "¡Listo!"
-              : phase === "error"
+              : phase === "error" || phase === "classroom-error"
               ? "Error"
+              : phase === "classroom"
+              ? "Quejas del Salón"
               : "Tus materias"}
           </p>
           <h1 className="mt-4 font-display text-4xl leading-[1.05] sm:text-5xl">
-            {phase === "intro1" ? (
+            {phase === "selection" ? (
+              <>¿Qué quieres <span className="gold-text">reportar</span>?</>
+            ) : phase === "intro1" ? (
               <>¡Gracias por mostrar <span className="gold-text">interés</span>!</>
             ) : phase === "intro2" ? (
               <>Tu voz construye un <span className="gold-text">acuerdo justo</span>.</>
             ) : phase === "terms" ? (
               <>Antes de empezar, <span className="gold-text">acepta los términos</span>.</>
-            ) : phase === "success" ? (
-              <>Encuesta enviada <span className="gold-text">con éxito</span>.</>
-            ) : phase === "error" ? (
+            ) : phase === "success" || phase === "classroom-success" ? (
+              <>Enviado <span className="gold-text">con éxito</span>.</>
+            ) : phase === "error" || phase === "classroom-error" ? (
               <>Algo salió <span className="gold-text">mal</span>.</>
+            ) : phase === "classroom" ? (
+              <>Quejas sobre el <span className="gold-text">salón</span>.</>
             ) : (
               <>Califica a tus <span className="gold-text">maestros</span>.</>
             )}
@@ -156,7 +184,48 @@ const Survey = () => {
         <section className="mx-auto mt-10 w-full max-w-2xl">
           <div className="luxe-card rounded-2xl p-1.5">
             <div className="rounded-[14px] bg-card/60 p-8 backdrop-blur-xl sm:p-10">
-              {phase === "intro1" && <Intro1 onNext={() => setPhase("intro2")} />}
+              {phase === "selection" && (
+                <SurveySelection
+                  onTeachers={() => setPhase("intro1")}
+                  onClassroom={() => setPhase("classroom")}
+                />
+              )}
+              {phase === "classroom" && (
+                <ClassroomForm
+                  onBack={() => setPhase("selection")}
+                  onSubmit={handleClassroomSubmit}
+                  submitting={submitting}
+                />
+              )}
+              {phase === "classroom-success" && !submitting && (
+                <div className="flex flex-col items-center gap-4 py-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">
+                  <div className="grid h-16 w-16 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
+                    <Check className="h-8 w-8 text-[color:var(--gold)]" />
+                  </div>
+                  <p className="text-base leading-relaxed text-foreground/90">
+                    Tu queja fue enviada correctamente. ¡Gracias por reportar!
+                  </p>
+                </div>
+              )}
+              {phase === "classroom-error" && !submitting && (
+                <div className="flex flex-col items-center gap-4 py-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">
+                  <div className="grid h-16 w-16 place-items-center rounded-full border border-destructive/40 bg-destructive/10">
+                    <AlertTriangle className="h-8 w-8 text-destructive" />
+                  </div>
+                  <p className="text-base leading-relaxed text-foreground/90">
+                    Hubo un error al enviar. Intenta de nuevo.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setPhase("classroom")}
+                    className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+                  >
+                    Reintentar
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
+              {phase === "intro1" && <Intro1 onBack={() => setPhase("selection")} onNext={() => setPhase("intro2")} />}
               {phase === "intro2" && (
                 <Intro2 onBack={() => setPhase("intro1")} onNext={() => setPhase("terms")} />
               )}
@@ -231,7 +300,152 @@ const Survey = () => {
 
 export default Survey;
 
-function Intro1({ onNext }: { onNext: () => void }) {
+function SurveySelection({
+  onTeachers,
+  onClassroom,
+}: {
+  onTeachers: () => void;
+  onClassroom: () => void;
+}) {
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-4">
+      <p className="text-sm leading-relaxed text-foreground/70 mb-6">
+        Elige el tipo de reporte que quieres enviar:
+      </p>
+
+      <button
+        type="button"
+        onClick={onTeachers}
+        className="group w-full flex items-center gap-5 rounded-xl border border-[color-mix(in_oklab,var(--gold)_35%,transparent)] bg-[oklch(0.85_0.19_115_/_0.06)] p-5 text-left transition-all hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--gold)_60%,transparent)] hover:bg-[oklch(0.85_0.19_115_/_0.1)]"
+      >
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[image:var(--gradient-gold)]">
+          <GraduationCap className="h-5 w-5 text-[color:var(--gold-foreground)]" />
+        </div>
+        <div className="flex-1">
+          <p className="font-display text-lg leading-tight text-foreground">Calificar maestros</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Evalúa a cada maestro y comparte tu experiencia con las materias.
+          </p>
+        </div>
+        <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+      </button>
+
+      <button
+        type="button"
+        onClick={onClassroom}
+        className="group w-full flex items-center gap-5 rounded-xl border border-border/60 bg-input/30 p-5 text-left transition-all hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)] hover:bg-input/50"
+      >
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-border/60 bg-input/50">
+          <AlertTriangle className="h-5 w-5 text-[color:var(--gold)]" />
+        </div>
+        <div className="flex-1">
+          <p className="font-display text-lg leading-tight text-foreground">Quejas sobre algo en el salón</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Reporta problemas de infraestructura, limpieza, conducta u otros.
+          </p>
+        </div>
+        <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+      </button>
+    </div>
+  );
+}
+
+const CLASSROOM_CATEGORIES = [
+  "Infraestructura (sillas, mesas, pizarrón, etc.)",
+  "Limpieza",
+  "Conducta de compañeros",
+  "Ruido / desorden",
+  "Ventilación / temperatura",
+  "Otro",
+] as const;
+
+function ClassroomForm({
+  onBack,
+  onSubmit,
+  submitting,
+}: {
+  onBack: () => void;
+  onSubmit: (category: string, description: string) => void;
+  submitting: boolean;
+}) {
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const max = 500;
+  const canSubmit = category.length > 0 && description.trim().length > 0;
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+      <div className="mb-6 flex items-center gap-3">
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
+          <AlertTriangle className="h-5 w-5 text-[color:var(--gold)]" />
+        </div>
+        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          Quejas sobre algo en el salón
+        </p>
+      </div>
+
+      <div className="space-y-5">
+        <div>
+          <label className="mb-2 block text-sm font-medium text-foreground">
+            Categoría
+          </label>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {CLASSROOM_CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setCategory(cat)}
+                className={`rounded-lg border px-4 py-2.5 text-left text-sm transition-all ${
+                  category === cat
+                    ? "border-[color-mix(in_oklab,var(--gold)_60%,transparent)] bg-[oklch(0.85_0.19_118_/_0.08)] text-foreground shadow-[0_0_0_3px_oklch(0.85_0.19_118_/_0.1)]"
+                    : "border-border/60 bg-input/30 text-foreground/80 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)] hover:bg-input/50"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-2 flex items-center justify-between">
+            <label className="text-sm font-medium text-foreground">Descripción</label>
+            <span className="text-[10px] text-muted-foreground/60">{description.length}/{max}</span>
+          </div>
+          <textarea
+            rows={4}
+            maxLength={max}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Describe el problema con el mayor detalle posible..."
+            className="w-full resize-none rounded-lg border border-border bg-input/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-[color-mix(in_oklab,var(--gold)_60%,transparent)] focus:bg-input focus:shadow-[0_0_0_4px_oklch(0.85_0.19_118_/_0.1)]"
+          />
+        </div>
+      </div>
+
+      <div className="mt-10 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Atrás
+        </button>
+        <button
+          type="button"
+          onClick={() => canSubmit && !submitting && onSubmit(category, description)}
+          disabled={!canSubmit || submitting}
+          className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+        >
+          {submitting ? "Enviando..." : "Enviar queja"}
+          <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Intro1({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
@@ -260,7 +474,14 @@ function Intro1({ onNext }: { onNext: () => void }) {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-end">
+      <div className="mt-10 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Atrás
+        </button>
         <button
           type="button"
           onClick={onNext}
