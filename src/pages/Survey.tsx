@@ -225,7 +225,7 @@ const Survey = () => {
                   </button>
                 </div>
               )}
-              {phase === "intro1" && <Intro1 onNext={() => setPhase("intro2")} />}
+              {phase === "intro1" && <Intro1 onBack={() => setPhase("selection")} onNext={() => setPhase("intro2")} />}
               {phase === "intro2" && (
                 <Intro2 onBack={() => setPhase("intro1")} onNext={() => setPhase("terms")} />
               )}
@@ -445,7 +445,7 @@ function ClassroomForm({
   );
 }
 
-function Intro1({ onNext }: { onNext: () => void }) {
+function Intro1({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
@@ -474,7 +474,14 @@ function Intro1({ onNext }: { onNext: () => void }) {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-end">
+      <div className="mt-10 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Atrás
+        </button>
         <button
           type="button"
           onClick={onNext}
