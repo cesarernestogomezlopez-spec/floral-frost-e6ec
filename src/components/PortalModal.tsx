@@ -34,17 +34,17 @@ export const PortalModal = ({ open, onClose }: Props) => {
             <button
               aria-label="Cerrar"
               onClick={onClose}
-              className="absolute top-5 right-5 glass rounded-full p-2 hover:bg-white/15 transition"
+              className="absolute top-5 right-5 glass rounded-full p-2 hover:bg-primary/10 transition"
             >
               <X size={16} />
             </button>
 
             <div className="text-center mb-10">
-              <p className="text-xs tracking-[0.4em] uppercase text-foreground/50 mb-2">
+              <p className="font-mono text-xs tracking-[0.4em] uppercase text-foreground/50 mb-2">
                 Portal 202
               </p>
               <h3 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                Elige tu <span className="gradient-text-green">destino</span>
+                Elige tu <span className="gradient-text">destino</span>
               </h3>
             </div>
 
@@ -61,7 +61,7 @@ export const PortalModal = ({ open, onClose }: Props) => {
                 <span className="text-xl font-bold tracking-wider">
                   PORTAL 202
                 </span>
-                <span className="text-xs text-foreground/60 tracking-widest uppercase">
+                <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
                   Acceso principal
                 </span>
               </motion.a>
@@ -76,7 +76,7 @@ export const PortalModal = ({ open, onClose }: Props) => {
               >
                 <span className="text-4xl">💻</span>
                 <span className="text-xl font-bold tracking-wider">E.I.U.S</span>
-                <span className="text-xs text-foreground/60 tracking-widest uppercase">
+                <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
                   Recursos digitales
                 </span>
               </motion.a>

@@ -216,7 +216,7 @@ const Survey = () => {
                   <button
                     type="button"
                     onClick={() => setPhase("classroom")}
-                    className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+                    className="btn-portal group inline-flex items-center gap-2 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
                   >
                     Reintentar
                     <ChevronRight className="h-3.5 w-3.5" />
@@ -247,7 +247,7 @@ const Survey = () => {
               )}
               {submitting && (
                 <div className="flex flex-col items-center gap-4 py-8 animate-in fade-in duration-300">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-[color:var(--gold)] border-t-transparent" />
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                   <p className="text-sm text-muted-foreground">Enviando respuestas...</p>
                 </div>
               )}

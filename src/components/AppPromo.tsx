@@ -151,11 +151,11 @@ export const AppPromo = () => {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto px-4"
         >
-          <p className="text-[11px] tracking-[0.4em] uppercase text-foreground/50 mb-3">
+          <p className="font-mono text-[11px] tracking-[0.4em] uppercase text-foreground/50 mb-3">
             Ventajas
           </p>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-            Todo lo que necesitas, <span className="gradient-text-green">en una sola app</span>
+            Todo lo que necesitas, <span className="gradient-text">en una sola app</span>
           </h3>
         </motion.div>
       </section>
@@ -166,7 +166,7 @@ export const AppPromo = () => {
           {/* Sticky phone */}
           <div className="hidden lg:flex sticky top-24 h-[calc(100vh-6rem)] items-center justify-center">
             <div className="relative w-64 xl:w-72">
-              <div className="absolute inset-0 rounded-[3rem] bg-emerald-500/30 blur-3xl scale-90" />
+              <div className="absolute inset-0 rounded-[3rem] bg-[var(--orb-1)] blur-3xl scale-90" />
               {/* Note 10+ style frame: ultra-thin bezels, glossy black, subtle side highlight */}
               <div className="relative rounded-[2.4rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
                 <div className="rounded-[2.25rem] p-[2px] bg-black">
