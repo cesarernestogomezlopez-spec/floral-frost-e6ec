@@ -93,11 +93,11 @@ const schedule: Row[] = [
 const toneClass = (tone?: Cell["tone"]) => {
   switch (tone) {
     case "break":
-      return "bg-teal-300/15 border-teal-200/25 text-teal-100";
+      return "border-[color:var(--c-mint)]/30 text-foreground/80 bg-[color:var(--c-mint)]/10";
     case "para":
-      return "bg-emerald-300/15 border-emerald-200/30 text-emerald-100";
+      return "bg-primary/10 border-primary/30 text-foreground/80";
     default:
-      return "bg-sky-300/10 border-sky-200/20 text-sky-50";
+      return "glass-sm text-foreground/80";
   }
 };
 
@@ -111,14 +111,14 @@ export const Schedule = () => {
     >
       <div className="flex items-end justify-between mb-6 px-1">
         <div>
-          <p className="text-xs tracking-[0.3em] uppercase text-foreground/50">
+          <p className="font-mono text-xs tracking-[0.3em] uppercase text-foreground/50">
             Horario semanal
           </p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mt-1">
-            Salón <span className="gradient-text-green">202</span>
+            Salón <span className="gradient-text">202</span>
           </h2>
         </div>
-        <span className="hidden sm:inline-flex glass rounded-full px-4 py-1.5 text-xs tracking-widest uppercase text-foreground/70">
+        <span className="hidden sm:inline-flex glass rounded-full px-4 py-1.5 font-mono text-xs tracking-widest uppercase text-foreground/70">
           Ciclo 2025 — 2026
         </span>
       </div>
@@ -127,7 +127,7 @@ export const Schedule = () => {
         <div className="min-w-[640px] px-2 sm:px-0">
           {/* Header */}
           <div className="grid grid-cols-[110px_repeat(5,1fr)] gap-2 mb-2">
-            <div className="text-[10px] sm:text-xs tracking-widest uppercase text-foreground/50 px-3 py-2">
+            <div className="font-mono text-[10px] sm:text-xs tracking-widest uppercase text-foreground/50 px-3 py-2">
               Hora
             </div>
             {days.map((d) => (
@@ -156,10 +156,10 @@ export const Schedule = () => {
                       {row.time}
                     </div>
                     <div
-                      className={`rounded-xl border px-4 py-3 text-center font-bold tracking-[0.2em] uppercase text-sm sm:text-base ${
+                      className={`rounded-xl border px-4 py-3 text-center font-bold tracking-[0.2em] uppercase text-sm sm:text-base text-foreground/90 ${
                         row.tone === "break"
-                          ? "bg-teal-400/20 border-teal-200/30 text-teal-50"
-                          : "bg-emerald-400/20 border-emerald-200/30 text-emerald-50"
+                          ? "bg-[color:var(--c-mint)]/15 border-[color:var(--c-mint)]/35"
+                          : "bg-primary/15 border-primary/35"
                       }`}
                       style={{
                         backdropFilter: "blur(14px)",

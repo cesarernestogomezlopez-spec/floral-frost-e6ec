@@ -180,7 +180,7 @@ const Survey = () => {
 
         {/* Card */}
         <section className="mx-auto mt-10 w-full max-w-2xl">
-          <div className="luxe-card rounded-2xl p-1.5">
+          <div className="glass-strong rounded-2xl p-1.5">
             <div className="rounded-[14px] bg-card/60 p-8 backdrop-blur-xl sm:p-10">
               {phase === "selection" && (
                 <SurveySelection
@@ -197,8 +197,8 @@ const Survey = () => {
               )}
               {phase === "classroom-success" && !submitting && (
                 <div className="flex flex-col items-center gap-4 py-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="grid h-16 w-16 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-                    <Check className="h-8 w-8 text-[color:var(--gold)]" />
+                  <div className="grid h-16 w-16 place-items-center rounded-full border border-[color:var(--c-mint)]/40 bg-[color:var(--c-mint)]/10">
+                    <Check className="h-8 w-8 text-[color:var(--c-mint)]" />
                   </div>
                   <p className="text-base leading-relaxed text-foreground/90">
                     Tu queja fue enviada correctamente. ¡Gracias por reportar!

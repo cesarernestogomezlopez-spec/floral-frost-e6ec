@@ -110,7 +110,7 @@ export const AppPromo = () => {
             >
               <span className="text-3xl">📱</span>
               <span className="text-sm sm:text-base">Descargar directo</span>
-              <span className="text-[10px] text-foreground/50 font-normal tracking-wider uppercase">APK · Portal 202</span>
+              <span className="font-mono text-[10px] text-foreground/50 font-normal tracking-wider uppercase">APK · Portal 202</span>
             </motion.a>
 
             {/* Option 2: Direct iOS IPA */}
@@ -137,7 +137,7 @@ export const AppPromo = () => {
           }}
           className="absolute bottom-4 flex flex-col items-center gap-1 text-foreground/40"
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase">Descubre más</span>
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase">Descubre más</span>
           <ChevronDown size={18} />
         </motion.div>
       </section>
