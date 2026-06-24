@@ -257,7 +257,7 @@ export const AppPromo = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 80, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-lg"
+            className="fixed bottom-5 inset-x-0 mx-auto z-50 w-[calc(100%-2rem)] max-w-lg"
           >
             <div className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl border border-border/60">
               <div className="flex-1 flex gap-2">

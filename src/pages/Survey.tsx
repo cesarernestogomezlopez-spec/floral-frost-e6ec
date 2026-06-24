@@ -47,6 +47,10 @@ const EMPTY_ANSWER: Answer = {
   dislikeTeacher: "",
 };
 
+// Survey answers post to the Portal Salón 202 Worker (admin panel) — not Formspree.
+// The Worker validates + stores them anonymously in Supabase (action: encuesta-enviar).
+const PORTAL_API = "https://portal202jv3.com/api/sheets";
+
 const Survey = () => {
   const [phase, setPhase] = useState<
     | "selection"
@@ -64,10 +68,14 @@ const Survey = () => {
   const handleClassroomSubmit = async (category: string, description: string) => {
     setSubmitting(true);
     try {
-      const res = await fetch("https://formspree.io/f/mwvyrvqr", {
+      const res = await fetch(PORTAL_API, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ "Tipo": "Queja del salón", "Categoría": category, "Descripción": description }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "encuesta-enviar",
+          tipo: "salon",
+          payload: { categoria: category, descripcion: description },
+        }),
       });
       setPhase(res.ok ? "classroom-success" : "classroom-error");
     } catch {
@@ -79,25 +87,17 @@ const Survey = () => {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    const payload: Record<string, string> = {};
-    for (const [cls, ans] of Object.entries(answers)) {
-      payload[`${cls} · Calificación`] = String(ans.rating);
-      payload[`${cls} · Le gusta de la materia`] = ans.likeSubject;
-      payload[`${cls} · No le gusta de la materia`] = ans.dislikeSubject;
-      payload[`${cls} · Le gusta del maestro`] = ans.likeTeacher;
-      payload[`${cls} · No le gusta del maestro`] = ans.dislikeTeacher;
-    }
     try {
-      const res = await fetch("https://formspree.io/f/mwvyrvqr", {
+      const res = await fetch(PORTAL_API, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "encuesta-enviar",
+          tipo: "maestros",
+          payload: { respuestas: answers },
+        }),
       });
-      if (res.ok) {
-        setPhase("success");
-      } else {
-        setPhase("error");
-      }
+      setPhase(res.ok ? "success" : "error");
     } catch {
       setPhase("error");
     } finally {
