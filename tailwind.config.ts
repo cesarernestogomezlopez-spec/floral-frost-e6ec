@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "media",
   content: [
     "./index.html",
     "./src/**/*.{ts,tsx}",
@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Cormorant Garamond"', "Georgia", "serif"],
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["Nunito", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Nunito", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ['"Space Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",

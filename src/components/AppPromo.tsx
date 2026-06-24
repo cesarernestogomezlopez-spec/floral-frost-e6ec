@@ -82,15 +82,15 @@ export const AppPromo = () => {
           className="max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-6">
-            <Smartphone size={14} className="text-emerald-300" />
-            <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-foreground/70 font-medium">
+            <Smartphone size={14} className="text-primary" />
+            <span className="font-mono text-[10px] sm:text-xs tracking-[0.25em] uppercase text-foreground/70 font-medium">
               Disponible para Android
             </span>
           </div>
 
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05] mb-6">
-            <span className="gradient-text-green">E.I.U.S.</span> y{" "}
-            <span className="gradient-text-green">PORTAL 202</span>,
+            <span className="gradient-text">E.I.U.S.</span> y{" "}
+            <span className="gradient-text">PORTAL 202</span>,
             <br className="hidden sm:block" /> en tus manos
           </h2>
 
@@ -119,11 +119,11 @@ export const AppPromo = () => {
               download
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="flex-1 flex flex-col items-center gap-2 glass rounded-2xl px-6 py-5 font-bold tracking-wide transition border border-emerald-400/20 text-center"
+              className="flex-1 flex flex-col items-center gap-2 glass rounded-2xl px-6 py-5 font-bold tracking-wide transition border border-primary/20 text-center"
             >
               <span className="text-3xl">🍎</span>
               <span className="text-sm sm:text-base">Descargar iOS (Necesitas una computadora)</span>
-              <span className="text-[10px] text-foreground/50 font-normal tracking-wider uppercase">IPA · Portal 202</span>
+              <span className="font-mono text-[10px] text-foreground/50 font-normal tracking-wider uppercase">IPA · Portal 202</span>
             </motion.a>
           </div>
         </motion.div>

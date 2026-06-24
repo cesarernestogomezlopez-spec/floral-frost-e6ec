@@ -28,9 +28,9 @@ const Home = () => {
       <main className="relative min-h-screen px-4 sm:px-6 lg:px-10 py-6 max-w-7xl mx-auto">
         {/* ambient orbs */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute -top-40 -left-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
-          <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-teal-400/15 blur-3xl" />
-          <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-cyan-500/15 blur-3xl" />
+          <div className="absolute -top-40 -left-20 h-96 w-96 rounded-full bg-[var(--orb-1)] blur-3xl" />
+          <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-[var(--orb-2)] blur-3xl" />
+          <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-[var(--orb-3)] blur-3xl" />
         </div>
 
         <motion.nav
@@ -40,9 +40,9 @@ const Home = () => {
           className="glass rounded-full flex items-center justify-between px-4 sm:px-6 py-3 mb-8"
         >
           <div className="flex items-center gap-3">
-            <img src="/favicon.png" alt="José Vasconcelos" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(16,185,129,0.4)]" />
+            <img src="/favicon.png" alt="José Vasconcelos" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
             <div className="leading-tight">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-foreground/50">
                 josé vasconcelos
               </p>
               <p className="text-sm font-bold tracking-wide">SALÓN 202</p>
@@ -63,7 +63,7 @@ const Home = () => {
             </Link>
             <button
               onClick={() => setModalOpen(true)}
-              className="glass-btn text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
+              className="btn-portal px-5 py-3 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
             >
               Entrar al Portal 202
             </button>
@@ -76,11 +76,11 @@ const Home = () => {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="text-center my-10 sm:my-16"
         >
-          <p className="text-[11px] sm:text-xs tracking-[0.5em] uppercase text-foreground/50 mb-3">
+          <p className="font-mono text-[11px] sm:text-xs tracking-[0.5em] uppercase text-foreground/50 mb-3">
             Bienvenidos al
           </p>
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none">
-            <span className="gradient-text-green">SALÓN 202</span>
+            <span className="gradient-text">SALÓN 202</span>
           </h1>
         </motion.header>
 
@@ -106,7 +106,7 @@ const Home = () => {
           </Link>
         </motion.div>
 
-        <footer className="text-center text-xs text-foreground/40 tracking-widest uppercase py-10 mt-6">
+        <footer className="text-center font-mono text-xs text-foreground/40 tracking-widest uppercase py-10 mt-6">
           © 2025 — Salón 202 · José Vasconcelos
         </footer>
       </main>

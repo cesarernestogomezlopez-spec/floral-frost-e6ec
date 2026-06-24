@@ -26,9 +26,9 @@ const DownloadApp = () => {
       <main className="relative min-h-screen px-4 sm:px-6 lg:px-10 py-6 max-w-7xl mx-auto">
         {/* ambient orbs */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute -top-40 -left-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
-          <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-teal-400/15 blur-3xl" />
-          <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-cyan-500/15 blur-3xl" />
+          <div className="absolute -top-40 -left-20 h-96 w-96 rounded-full bg-[var(--orb-1)] blur-3xl" />
+          <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-[var(--orb-2)] blur-3xl" />
+          <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-[var(--orb-3)] blur-3xl" />
         </div>
 
         <motion.nav
@@ -38,9 +38,9 @@ const DownloadApp = () => {
           className="glass rounded-full flex items-center justify-between px-4 sm:px-6 py-3 mb-8"
         >
           <div className="flex items-center gap-3">
-            <img src="/favicon.png" alt="José Vasconcelos" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(16,185,129,0.4)]" />
+            <img src="/favicon.png" alt="José Vasconcelos" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
             <div className="leading-tight">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-foreground/50">
                 josé vasconcelos
               </p>
               <p className="text-sm font-bold tracking-wide">SALÓN 202</p>
@@ -62,7 +62,7 @@ const DownloadApp = () => {
             <a
               href="https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/PORTAL-202.apk"
               download
-              className="glass-btn text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
+              className="btn-portal px-5 sm:px-6 py-3 text-xs sm:text-sm tracking-[0.2em] uppercase"
             >
               Descargar desde Portal 202
             </a>

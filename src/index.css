@@ -2,209 +2,330 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base theme (green glassmorphism) ─── */
+/* ───────────────────────────────────────────────────────────
+   Portal Salón 202 design system — spring-pastel liquid glass.
+   Mirrors public/new-ui.html: purple→pink gradient headings,
+   mint-green accents, Nunito + Space Mono, liquid-glass cards.
+
+   Adaptive theme: light spring-pastel by default, dark via
+   prefers-color-scheme (this marketing SPA has no toggle, so it
+   follows the OS exactly like the portal's loading screen does —
+   keeping the portal→splash→page handoff seamless in both modes).
+   ─────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --background: 160 40% 6%;
-    --foreground: 150 30% 96%;
-    --card: 160 35% 10%;
-    --card-foreground: 150 30% 96%;
-    --popover: 160 35% 10%;
-    --popover-foreground: 150 30% 96%;
-    --primary: 150 80% 45%;
-    --primary-foreground: 160 40% 6%;
-    --secondary: 160 25% 18%;
-    --secondary-foreground: 150 30% 96%;
-    --muted: 160 20% 14%;
-    --muted-foreground: 150 15% 70%;
-    --accent: 175 70% 45%;
-    --accent-foreground: 160 40% 6%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 150 30% 96% / 0.12;
-    --input: 150 30% 96% / 0.12;
-    --ring: 150 80% 45%;
+    /* shadcn/ui tokens (HSL triplets) — portal LIGHT */
+    --background: 120 31% 95%;       /* #f0f7f0 */
+    --foreground: 125 13% 20%;       /* #2d3a2e */
+    --card: 0 0% 100%;               /* #ffffff */
+    --card-foreground: 125 13% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 125 13% 20%;
+    --primary: 271 91% 65%;          /* purple #a855f7 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 125 39% 93%;        /* #e8f5e9 */
+    --secondary-foreground: 125 13% 20%;
+    --muted: 125 39% 93%;
+    --muted-foreground: 125 14% 49%; /* #6b8f6e */
+    --accent: 330 81% 70%;           /* pink #f472b6 */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 350 84% 60%;      /* #f43f5e-ish */
+    --destructive-foreground: 0 0% 100%;
+    --border: 122 38% 84%;           /* #c8e6c9 */
+    --input: 122 38% 84%;
+    --ring: 271 91% 65%;
     --radius: 1rem;
 
-    /* Glass tokens */
-    --glass-bg: 150 30% 96% / 0.06;
-    --glass-bg-strong: 150 30% 96% / 0.12;
-    --glass-border: 150 30% 96% / 0.18;
-    --glass-shadow: 0 8px 32px 0 hsl(160 60% 4% / 0.5);
+    /* Portal brand accents (hex — for gradients, glows, bespoke fills) */
+    --c-purple: #a855f7;
+    --c-pink:   #f472b6;
+    --c-mint:   #34d399;
+    --c-yellow: #fbbf24;
+    --c-lav:    #c084fc;
+    --c-sky:    #38bdf8;
+    --c-green-deep: #006f3c;
 
-    /* Green gradients */
-    --gradient-green: linear-gradient(
-      90deg,
-      hsl(150 70% 30%) 0%,
-      hsl(150 90% 55%) 25%,
-      hsl(170 95% 70%) 50%,
-      hsl(150 90% 55%) 75%,
-      hsl(150 70% 30%) 100%
-    );
-    --gradient-bg: radial-gradient(at 20% 10%, hsl(160 60% 18%) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsl(175 60% 22%) 0px, transparent 50%),
-      radial-gradient(at 70% 90%, hsl(150 70% 20%) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, hsl(190 60% 18%) 0px, transparent 50%);
+    /* Liquid glass (portal --gl-*) — LIGHT */
+    --gl-fill:      rgba(255, 255, 255, 0.58);
+    --gl-fill-sm:   rgba(255, 255, 255, 0.44);
+    --gl-fill-str:  rgba(255, 255, 255, 0.76);
+    --gl-border:    rgba(255, 255, 255, 0.68);
+    --gl-blur:      blur(20px) saturate(1.8);
+    --gl-shadow:    0 4px 20px rgba(168, 85, 247, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    --gl-shadow-str:0 8px 32px rgba(168, 85, 247, 0.11), 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.88);
 
-    /* Gold tokens (for survey page) */
-    --gold: oklch(0.86 0.19 115);
-    --gold-foreground: oklch(0.13 0.04 145);
-    --gradient-gold: linear-gradient(
-      135deg,
-      oklch(0.94 0.19 108) 0%,
-      oklch(0.82 0.20 125) 50%,
-      oklch(0.65 0.18 150) 100%
-    );
-    --gradient-luxe: linear-gradient(
-      135deg,
-      oklch(0.20 0.06 140) 0%,
-      oklch(0.13 0.04 150) 50%,
-      oklch(0.17 0.07 110) 100%
-    );
+    /* Heading gradient + signature easing */
+    --grad-heading: linear-gradient(135deg, #a855f7, #f472b6, #a855f7);
+    --grad-btn: linear-gradient(135deg, #a855f7, #f472b6);
+    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Page background mesh (light) */
+    --mesh:
+      radial-gradient(circle at 15% 20%, rgba(252, 228, 236, 0.6) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(243, 232, 255, 0.6) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(232, 245, 233, 0.4) 0%, transparent 60%);
+
+    /* Ambient orb + splash tokens (light) */
+    --orb-1: rgba(168, 85, 247, 0.20);
+    --orb-2: rgba(244, 114, 182, 0.16);
+    --orb-3: rgba(52, 211, 153, 0.18);
+    --blob-1: rgba(52, 211, 153, 0.26);
+    --blob-2: rgba(168, 85, 247, 0.20);
+    --blob-3: rgba(244, 114, 182, 0.18);
+    --splash-bg: #f0f7f0;
+    --splash-card: rgba(255, 255, 255, 0.88);
+    --splash-card-border: rgba(200, 230, 200, 0.5);
+    --splash-mono: rgba(107, 143, 110, 0.85);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 215 28% 7%;       /* #0d1117 */
+      --foreground: 210 30% 92%;      /* #e6edf3 */
+      --card: 215 21% 11%;            /* #161b22 */
+      --card-foreground: 210 30% 92%;
+      --popover: 215 21% 11%;
+      --popover-foreground: 210 30% 92%;
+      --primary: 270 95% 75%;         /* lavender #c084fc */
+      --primary-foreground: 215 28% 7%;
+      --secondary: 214 17% 13%;       /* #1c2128 */
+      --secondary-foreground: 210 30% 92%;
+      --muted: 214 17% 13%;
+      --muted-foreground: 212 9% 58%; /* #8b949e */
+      --accent: 330 81% 70%;          /* pink */
+      --accent-foreground: 215 28% 7%;
+      --destructive: 350 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 213 12% 21%;          /* #30363d */
+      --input: 213 12% 21%;
+      --ring: 270 95% 75%;
+
+      --c-purple: #c084fc;
+
+      --gl-fill:      rgba(10, 16, 20, 0.64);
+      --gl-fill-sm:   rgba(10, 16, 20, 0.48);
+      --gl-fill-str:  rgba(10, 16, 20, 0.8);
+      --gl-border:    rgba(255, 255, 255, 0.1);
+      --gl-shadow:    0 4px 20px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --gl-shadow-str:0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+      --grad-heading: linear-gradient(135deg, #c084fc, #f472b6, #c084fc);
+      --grad-btn: linear-gradient(135deg, #c084fc, #f472b6);
+
+      --mesh:
+        radial-gradient(circle at 15% 20%, rgba(192, 132, 252, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(244, 114, 182, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(30, 21, 48, 0.4) 0%, transparent 60%);
+
+      --orb-1: rgba(192, 132, 252, 0.16);
+      --orb-2: rgba(244, 114, 182, 0.12);
+      --orb-3: rgba(52, 211, 153, 0.12);
+      --blob-1: rgba(52, 211, 153, 0.18);
+      --blob-2: rgba(192, 132, 252, 0.16);
+      --blob-3: rgba(244, 114, 182, 0.12);
+      --splash-bg: #0d1a0e;
+      --splash-card: rgba(15, 25, 16, 0.85);
+      --splash-card-border: rgba(52, 211, 153, 0.18);
+      --splash-mono: rgba(180, 215, 185, 0.6);
+    }
   }
 
   * {
-    border-color: hsl(var(--glass-border));
+    border-color: hsl(var(--border));
   }
 
   body {
     @apply text-foreground antialiased;
     background-color: hsl(var(--background));
-    background-image: var(--gradient-bg);
+    background-image: var(--mesh);
     background-attachment: fixed;
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-/* ─── Survey theme override ─── */
-html[data-theme="survey"] body {
-  background:
-    radial-gradient(ellipse 80% 50% at 80% 0%, oklch(0.35 0.18 110 / 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 10% 100%, oklch(0.30 0.15 150 / 0.30) 0%, transparent 60%),
-    radial-gradient(ellipse at center, oklch(0.13 0.035 140) 0%, oklch(0.08 0.02 145) 70%) fixed;
-  background-attachment: fixed;
-}
-
-/* ─── Glass components ─── */
+/* ─── Glass + portal component utilities ─── */
 @layer components {
   .glass {
-    background: hsla(var(--glass-bg));
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid hsla(var(--glass-border));
-    box-shadow: var(--glass-shadow), inset 0 1px 0 0 hsl(0 0% 100% / 0.08);
+    background: var(--gl-fill);
+    backdrop-filter: var(--gl-blur);
+    -webkit-backdrop-filter: var(--gl-blur);
+    border: 1px solid var(--gl-border);
+    box-shadow: var(--gl-shadow);
+  }
+
+  .glass-sm {
+    background: var(--gl-fill-sm);
+    backdrop-filter: var(--gl-blur);
+    -webkit-backdrop-filter: var(--gl-blur);
+    border: 1px solid var(--gl-border);
+    box-shadow: var(--gl-shadow);
   }
 
   .glass-strong {
-    background: hsla(var(--glass-bg-strong));
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid hsla(var(--glass-border));
-    box-shadow: var(--glass-shadow), inset 0 1px 0 0 hsl(0 0% 100% / 0.12);
+    background: var(--gl-fill-str);
+    backdrop-filter: var(--gl-blur);
+    -webkit-backdrop-filter: var(--gl-blur);
+    border: 1px solid var(--gl-border);
+    box-shadow: var(--gl-shadow-str);
   }
 
   .glass-btn {
-    @apply glass rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300;
-    @apply hover:bg-white/15 hover:border-white/30 active:scale-[0.98];
+    @apply glass rounded-full px-6 py-3 font-bold tracking-wide transition-all duration-300;
+    @apply hover:-translate-y-0.5 active:scale-[0.98];
+    color: hsl(var(--foreground));
+  }
+  .glass-btn:hover {
+    border-color: var(--c-purple);
+    box-shadow: var(--gl-shadow), 0 0 0 2px hsl(var(--primary) / 0.18);
   }
 
+  /* Portal purple→pink shimmer heading. `gradient-text-green` kept as
+     an alias so any stale references still render the portal heading. */
+  .gradient-text,
   .gradient-text-green {
-    background: var(--gradient-green);
-    background-size: 300% 100%;
+    background: var(--grad-heading);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    animation: shimmer 4s linear infinite;
+    animation: gradShift 3s ease-in-out infinite;
+  }
+
+  /* Primary pill button — portal gradient */
+  .btn-portal {
+    background: var(--grad-btn);
+    color: #fff;
+    @apply rounded-full font-extrabold tracking-wide transition-all duration-300;
+    box-shadow: 0 8px 24px hsl(var(--primary) / 0.28);
+  }
+  .btn-portal:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 34px hsl(var(--primary) / 0.42);
+  }
+  .btn-portal:active {
+    transform: scale(0.98);
   }
 
   .glow-green {
     box-shadow:
-      0 0 20px hsl(150 80% 50% / 0.5),
-      0 0 40px hsl(150 80% 45% / 0.35),
-      0 0 80px hsl(150 80% 45% / 0.25),
-      inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
-    animation: pulse-glow 2.8s ease-in-out infinite;
+      0 0 0 1px rgba(52, 211, 153, 0.28),
+      0 8px 30px rgba(52, 211, 153, 0.3),
+      0 2px 12px rgba(168, 85, 247, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    animation: pulse-green 2.8s ease-in-out infinite;
   }
 
   .glow-blue {
     box-shadow:
-      0 0 20px hsl(220 80% 60% / 0.5),
-      0 0 40px hsl(220 80% 55% / 0.35),
-      0 0 80px hsl(220 80% 55% / 0.25),
-      inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
-    animation: pulse-glow-blue 2.8s ease-in-out infinite;
+      0 0 0 1px rgba(56, 189, 248, 0.28),
+      0 8px 30px rgba(56, 189, 248, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    animation: pulse-blue 2.8s ease-in-out infinite;
   }
 
-  /* Survey / gold utilities */
-  .luxe-card {
-    background: var(--gradient-luxe);
-    box-shadow:
-      0 30px 80px -20px color-mix(in oklab, var(--gold) 35%, transparent),
-      0 8px 32px -8px oklch(0 0 0 / 0.45),
-      inset 0 1px 0 0 oklch(1 0 0 / 0.08);
-    border: 1px solid color-mix(in oklab, var(--gold) 18%, transparent);
-  }
-
-  .gold-text {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
+  /* Hairline divider (portal style) */
   .hairline {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      color-mix(in oklab, var(--gold) 60%, transparent),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent);
   }
 }
 
 /* ─── Animations ─── */
 @layer utilities {
-  @keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
+  @keyframes gradShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
-  @keyframes pulse-glow {
+  @keyframes pulse-green {
     0%, 100% {
       box-shadow:
-        0 0 20px hsl(150 80% 50% / 0.5),
-        0 0 40px hsl(150 80% 45% / 0.35),
-        0 0 70px hsl(150 80% 45% / 0.2),
-        inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
+        0 0 0 1px rgba(52, 211, 153, 0.28),
+        0 8px 30px rgba(52, 211, 153, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
     50% {
       box-shadow:
-        0 0 30px hsl(150 90% 55% / 0.7),
-        0 0 60px hsl(150 80% 50% / 0.5),
-        0 0 110px hsl(150 80% 50% / 0.35),
-        inset 0 1px 0 0 hsl(0 0% 100% / 0.25);
+        0 0 0 1px rgba(52, 211, 153, 0.42),
+        0 12px 42px rgba(52, 211, 153, 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
   }
 
-  @keyframes pulse-glow-blue {
+  @keyframes pulse-blue {
     0%, 100% {
       box-shadow:
-        0 0 20px hsl(220 80% 60% / 0.5),
-        0 0 40px hsl(220 80% 55% / 0.35),
-        0 0 70px hsl(220 80% 55% / 0.2),
-        inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
+        0 0 0 1px rgba(56, 189, 248, 0.28),
+        0 8px 30px rgba(56, 189, 248, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
     50% {
       box-shadow:
-        0 0 30px hsl(220 90% 65% / 0.7),
-        0 0 60px hsl(220 80% 60% / 0.5),
-        0 0 110px hsl(220 80% 60% / 0.35),
-        inset 0 1px 0 0 hsl(0 0% 100% / 0.25);
+        0 0 0 1px rgba(56, 189, 248, 0.42),
+        0 12px 42px rgba(56, 189, 248, 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
   }
+
+  /* ── Portal-style splash (loading screen) ── */
+  @keyframes lsBlob1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, 30px) scale(1.1); }
+    66% { transform: translate(-25px, 45px) scale(0.93); }
+  }
+  @keyframes lsBlob2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(-35px, -40px) scale(1.08); }
+    70% { transform: translate(20px, -20px) scale(0.95); }
+  }
+  @keyframes lsBlob3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-22px, 28px) scale(1.12); }
+  }
+  @keyframes lsDotBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-12px) scale(1.15); }
+    60% { transform: translateY(3px) scale(0.9); }
+  }
+
+  .splash-root { background: var(--splash-bg); }
+  .splash-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+  }
+  .splash-blob-1 { background: radial-gradient(circle, var(--blob-1) 0%, transparent 70%); animation: lsBlob1 9s ease-in-out infinite; }
+  .splash-blob-2 { background: radial-gradient(circle, var(--blob-2) 0%, transparent 70%); animation: lsBlob2 11s ease-in-out 1.5s infinite; }
+  .splash-blob-3 { background: radial-gradient(circle, var(--blob-3) 0%, transparent 70%); animation: lsBlob3 8s ease-in-out 3s infinite; }
+  .splash-card {
+    background: var(--splash-card);
+    border: 1.5px solid var(--splash-card-border);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    box-shadow:
+      0 4px 24px rgba(52, 211, 153, 0.1),
+      0 20px 60px rgba(168, 85, 247, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .splash-dot { width: 12px; height: 12px; border-radius: 50%; animation: lsDotBounce 1.1s ease-in-out infinite; }
+  .splash-dot:nth-child(1) { background: linear-gradient(135deg, #34d399, #10b981); box-shadow: 0 2px 10px rgba(52, 211, 153, 0.5); animation-delay: 0s; }
+  .splash-dot:nth-child(2) { background: linear-gradient(135deg, #10b981, #06b6d4); box-shadow: 0 2px 10px rgba(16, 185, 129, 0.5); animation-delay: 0.14s; }
+  .splash-dot:nth-child(3) { background: linear-gradient(135deg, #84cc16, #34d399); box-shadow: 0 2px 10px rgba(132, 204, 22, 0.5); animation-delay: 0.28s; }
+  .splash-mono { font-family: 'Space Mono', ui-monospace, monospace; color: var(--splash-mono); }
 }

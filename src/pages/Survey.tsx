@@ -59,8 +59,6 @@ const Survey = () => {
 
   useEffect(() => {
     document.title = "Encuesta · Jefe de Grupo";
-    document.documentElement.setAttribute("data-theme", "survey");
-    return () => document.documentElement.removeAttribute("data-theme");
   }, []);
 
   const handleClassroomSubmit = async (category: string, description: string) => {
@@ -111,27 +109,27 @@ const Survey = () => {
     <main className="relative min-h-screen overflow-hidden">
       {/* ambient glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[oklch(0.85_0.19_115_/_0.18)] blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[450px] w-[450px] rounded-full bg-[oklch(0.55_0.17_150_/_0.25)] blur-3xl" />
-        <div className="absolute top-1/3 -left-20 h-[350px] w-[350px] rounded-full bg-[oklch(0.70_0.18_135_/_0.15)] blur-3xl" />
+        <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[var(--orb-1)] blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[450px] w-[450px] rounded-full bg-[var(--orb-2)] blur-3xl" />
+        <div className="absolute top-1/3 -left-20 h-[350px] w-[350px] rounded-full bg-[var(--orb-3)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-10 lg:py-14">
         {/* Header */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="grid h-9 w-9 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[image:var(--gradient-gold)]">
-              <Sparkles className="h-4 w-4 text-[color:var(--gold-foreground)]" />
+            <div className="grid h-9 w-9 place-items-center rounded-full border border-primary/40 bg-[image:var(--grad-btn)]">
+              <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="font-display text-xl tracking-wide">José Vasconcelos</span>
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden text-xs uppercase tracking-[0.3em] text-muted-foreground sm:block">
+            <div className="hidden font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground sm:block">
               Encuesta · 2026
             </div>
             <Link
               to="/"
-              className="text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Inicio
             </Link>
@@ -142,7 +140,7 @@ const Survey = () => {
 
         {/* Hero */}
         <section className="mx-auto mt-12 max-w-2xl text-center">
-          <p className="text-xs uppercase tracking-[0.4em] text-[color:var(--gold)]/90">
+          <p className="font-mono text-xs uppercase tracking-[0.4em] text-primary/90">
             {phase === "selection"
               ? "Encuestas"
               : phase === "intro1"
@@ -161,21 +159,21 @@ const Survey = () => {
           </p>
           <h1 className="mt-4 font-display text-4xl leading-[1.05] sm:text-5xl">
             {phase === "selection" ? (
-              <>¿Qué quieres <span className="gold-text">reportar</span>?</>
+              <>¿Qué quieres <span className="gradient-text">reportar</span>?</>
             ) : phase === "intro1" ? (
-              <>¡Gracias por mostrar <span className="gold-text">interés</span>!</>
+              <>¡Gracias por mostrar <span className="gradient-text">interés</span>!</>
             ) : phase === "intro2" ? (
-              <>Tu voz construye un <span className="gold-text">acuerdo justo</span>.</>
+              <>Tu voz construye un <span className="gradient-text">acuerdo justo</span>.</>
             ) : phase === "terms" ? (
-              <>Antes de empezar, <span className="gold-text">acepta los términos</span>.</>
+              <>Antes de empezar, <span className="gradient-text">acepta los términos</span>.</>
             ) : phase === "success" || phase === "classroom-success" ? (
-              <>Enviado <span className="gold-text">con éxito</span>.</>
+              <>Enviado <span className="gradient-text">con éxito</span>.</>
             ) : phase === "error" || phase === "classroom-error" ? (
-              <>Algo salió <span className="gold-text">mal</span>.</>
+              <>Algo salió <span className="gradient-text">mal</span>.</>
             ) : phase === "classroom" ? (
-              <>Quejas sobre el <span className="gold-text">salón</span>.</>
+              <>Quejas sobre el <span className="gradient-text">salón</span>.</>
             ) : (
-              <>Califica a tus <span className="gold-text">maestros</span>.</>
+              <>Califica a tus <span className="gradient-text">maestros</span>.</>
             )}
           </h1>
         </section>
