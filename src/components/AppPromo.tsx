@@ -212,7 +212,7 @@ export const AppPromo = () => {
                 {/* Mobile inline screenshot */}
                 <div className="lg:hidden mb-8 mx-auto w-56">
                   <div className="relative">
-                    <div className="absolute inset-0 rounded-[2.2rem] bg-emerald-500/25 blur-2xl scale-90" />
+                    <div className="absolute inset-0 rounded-[2.2rem] bg-[var(--orb-1)] blur-2xl scale-90" />
                     <div className="relative rounded-[2rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
                       <div className="rounded-[1.85rem] p-[2px] bg-black">
                         <div className="relative rounded-[1.75rem] bg-black overflow-hidden aspect-[9/19.5]">
@@ -230,10 +230,10 @@ export const AppPromo = () => {
                 </div>
 
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-emerald-500/15 flex items-center justify-center border border-emerald-200/20">
-                    <f.icon size={20} className="text-emerald-300" />
+                  <div className="w-11 h-11 rounded-xl bg-primary/12 flex items-center justify-center border border-primary/25">
+                    <f.icon size={20} className="text-primary" />
                   </div>
-                  <span className="text-[10px] tracking-[0.3em] uppercase text-foreground/40">
+                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-foreground/40">
                     Ventaja {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -259,14 +259,14 @@ export const AppPromo = () => {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-lg"
           >
-            <div className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl border border-white/10">
+            <div className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl border border-border/60">
               <div className="flex-1 flex gap-2">
                 <motion.a
                   href={APK_URL}
                   download
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-1 flex items-center justify-center gap-2 glow-green bg-emerald-500/20 border border-emerald-400/30 rounded-xl py-2.5 text-xs font-bold tracking-wide"
+                  className="flex-1 flex items-center justify-center gap-2 glow-green bg-[color:var(--c-mint)]/15 border border-[color:var(--c-mint)]/30 rounded-xl py-2.5 text-xs font-bold tracking-wide"
                 >
                   <span>📱</span>
                   <span>Descargar directo</span>
@@ -276,7 +276,7 @@ export const AppPromo = () => {
                   download
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-1 flex items-center justify-center gap-2 glass border border-white/10 rounded-xl py-2.5 text-xs font-bold tracking-wide"
+                  className="flex-1 flex items-center justify-center gap-2 glass border border-primary/20 rounded-xl py-2.5 text-xs font-bold tracking-wide"
                 >
                   <span>🍎</span>
                   <span className="hidden sm:inline">Descargar iOS</span>

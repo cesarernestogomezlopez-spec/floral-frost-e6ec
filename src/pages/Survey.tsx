@@ -253,8 +253,8 @@ const Survey = () => {
               )}
               {phase === "success" && !submitting && (
                 <div className="flex flex-col items-center gap-4 py-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="grid h-16 w-16 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-                    <Check className="h-8 w-8 text-[color:var(--gold)]" />
+                  <div className="grid h-16 w-16 place-items-center rounded-full border border-[color:var(--c-mint)]/40 bg-[color:var(--c-mint)]/10">
+                    <Check className="h-8 w-8 text-[color:var(--c-mint)]" />
                   </div>
                   <p className="text-base leading-relaxed text-foreground/90">
                     Tus respuestas fueron enviadas correctamente. ¡Gracias por participar!
@@ -272,7 +272,7 @@ const Survey = () => {
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+                    className="btn-portal group inline-flex items-center gap-2 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
                   >
                     Reintentar
                     <ChevronRight className="h-3.5 w-3.5" />
@@ -287,7 +287,7 @@ const Survey = () => {
           </p>
         </section>
 
-        <footer className="mt-auto pt-16 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
+        <footer className="mt-auto pt-16 text-center font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
           Jefe de Grupo · 2026
         </footer>
       </div>
@@ -314,10 +314,10 @@ function SurveySelection({
       <button
         type="button"
         onClick={onTeachers}
-        className="group w-full flex items-center gap-5 rounded-xl border border-[color-mix(in_oklab,var(--gold)_35%,transparent)] bg-[oklch(0.85_0.19_115_/_0.06)] p-5 text-left transition-all hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--gold)_60%,transparent)] hover:bg-[oklch(0.85_0.19_115_/_0.1)]"
+        className="group w-full flex items-center gap-5 rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 text-left transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10"
       >
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[image:var(--gradient-gold)]">
-          <GraduationCap className="h-5 w-5 text-[color:var(--gold-foreground)]" />
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-primary/40 bg-[image:var(--grad-btn)]">
+          <GraduationCap className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1">
           <p className="font-display text-lg leading-tight text-foreground">Calificar maestros</p>
@@ -331,10 +331,10 @@ function SurveySelection({
       <button
         type="button"
         onClick={onClassroom}
-        className="group w-full flex items-center gap-5 rounded-xl border border-border/60 bg-input/30 p-5 text-left transition-all hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)] hover:bg-input/50"
+        className="group w-full flex items-center gap-5 rounded-2xl border border-border/60 bg-secondary/40 p-5 text-left transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:bg-secondary/60"
       >
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-border/60 bg-input/50">
-          <AlertTriangle className="h-5 w-5 text-[color:var(--gold)]" />
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-border/60 bg-secondary/60">
+          <AlertTriangle className="h-5 w-5 text-accent" />
         </div>
         <div className="flex-1">
           <p className="font-display text-lg leading-tight text-foreground">Quejas sobre algo en el salón</p>
@@ -374,10 +374,10 @@ function ClassroomForm({
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-          <AlertTriangle className="h-5 w-5 text-[color:var(--gold)]" />
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-accent/40 bg-accent/10">
+          <AlertTriangle className="h-5 w-5 text-accent" />
         </div>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
           Quejas sobre algo en el salón
         </p>
       </div>
@@ -393,10 +393,10 @@ function ClassroomForm({
                 key={cat}
                 type="button"
                 onClick={() => setCategory(cat)}
-                className={`rounded-lg border px-4 py-2.5 text-left text-sm transition-all ${
+                className={`rounded-xl border px-4 py-2.5 text-left text-sm transition-all ${
                   category === cat
-                    ? "border-[color-mix(in_oklab,var(--gold)_60%,transparent)] bg-[oklch(0.85_0.19_118_/_0.08)] text-foreground shadow-[0_0_0_3px_oklch(0.85_0.19_118_/_0.1)]"
-                    : "border-border/60 bg-input/30 text-foreground/80 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)] hover:bg-input/50"
+                    ? "border-primary/60 bg-primary/[0.08] text-foreground shadow-[0_0_0_3px_hsl(var(--primary)/0.15)]"
+                    : "border-border/60 bg-secondary/40 text-foreground/80 hover:border-primary/40 hover:bg-secondary/60"
                 }`}
               >
                 {cat}
@@ -416,7 +416,7 @@ function ClassroomForm({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe el problema con el mayor detalle posible..."
-            className="w-full resize-none rounded-lg border border-border bg-input/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-[color-mix(in_oklab,var(--gold)_60%,transparent)] focus:bg-input focus:shadow-[0_0_0_4px_oklch(0.85_0.19_118_/_0.1)]"
+            className="w-full resize-none rounded-xl border border-border bg-input/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-primary/60 focus:bg-input focus:shadow-[0_0_0_4px_hsl(var(--primary)/0.15)]"
           />
         </div>
       </div>
@@ -425,7 +425,7 @@ function ClassroomForm({
         <button
           type="button"
           onClick={onBack}
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Atrás
         </button>
@@ -433,7 +433,7 @@ function ClassroomForm({
           type="button"
           onClick={() => canSubmit && !submitting && onSubmit(category, description)}
           disabled={!canSubmit || submitting}
-          className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+          className="btn-portal group inline-flex items-center gap-2 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
         >
           {submitting ? "Enviando..." : "Enviar queja"}
           <ChevronRight className="h-3.5 w-3.5" />
@@ -447,10 +447,10 @@ function Intro1({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-          <Heart className="h-5 w-5 text-[color:var(--gold)]" />
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-accent/40 bg-accent/10">
+          <Heart className="h-5 w-5 text-accent" />
         </div>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
           Mensaje del Jefe de Grupo
         </p>
       </div>
@@ -462,9 +462,9 @@ function Intro1({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
         mucho, etc.
       </p>
 
-      <div className="mt-6 rounded-xl border border-[color-mix(in_oklab,var(--gold)_35%,transparent)] bg-[oklch(0.85_0.19_115_/_0.06)] p-5">
+      <div className="mt-6 rounded-2xl border border-primary/30 bg-primary/[0.06] p-5">
         <div className="flex items-start gap-3">
-          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold)]" />
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <p className="text-sm font-medium uppercase leading-relaxed tracking-[0.08em] text-foreground">
             El objetivo no es insultar, sino llegar a un acuerdo entre
             maestro–alumno. Cualquier insulto hacia un maestro será eliminado.
@@ -476,14 +476,14 @@ function Intro1({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
         <button
           type="button"
           onClick={onBack}
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Atrás
         </button>
         <button
           type="button"
           onClick={onNext}
-          className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[image:var(--gradient-gold)] px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_50px_-10px_oklch(0.85_0.19_118_/_0.8)]"
+          className="btn-portal group relative inline-flex items-center gap-2 overflow-hidden px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
         >
           Siguiente
           <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -497,17 +497,17 @@ function Intro2({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-          <ListChecks className="h-5 w-5 text-[color:var(--gold)]" />
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 bg-primary/10">
+          <ListChecks className="h-5 w-5 text-primary" />
         </div>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
           ¿Cómo funciona esto?
         </p>
       </div>
 
       <ol className="space-y-5">
         <li className="flex gap-4">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-gold)] text-sm font-semibold text-[color:var(--gold-foreground)]">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--grad-btn)] text-sm font-semibold text-white">
             1
           </span>
           <div className="flex-1">
