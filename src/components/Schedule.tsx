@@ -185,7 +185,7 @@ export const Schedule = () => {
                   {row.cells.map((c, i) => (
                     <div
                       key={i}
-                      className={`rounded-xl border px-2 py-3 text-center text-xs sm:text-sm transition-all hover:scale-[1.02] hover:bg-white/15 ${toneClass(
+                      className={`rounded-xl border px-2 py-3 text-center text-xs sm:text-sm transition-all hover:scale-[1.02] hover:border-primary/40 ${toneClass(
                         c.tone,
                       )}`}
                       style={{
