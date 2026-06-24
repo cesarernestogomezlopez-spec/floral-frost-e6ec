@@ -122,8 +122,8 @@ export const AppPromo = () => {
               className="flex-1 flex flex-col items-center gap-2 glass rounded-2xl px-6 py-5 font-bold tracking-wide transition border border-primary/20 text-center"
             >
               <span className="text-3xl">🍎</span>
-              <span className="text-sm sm:text-base">Descargar iOS (Necesitas una computadora)</span>
-              <span className="font-mono text-[10px] text-foreground/50 font-normal tracking-wider uppercase">IPA · Portal 202</span>
+              <span className="text-sm sm:text-base">Descargar iOS</span>
+              <span className="font-mono text-[10px] text-foreground/50 font-normal tracking-wider uppercase">IPA · Necesita computadora</span>
             </motion.a>
           </div>
         </motion.div>
@@ -135,7 +135,7 @@ export const AppPromo = () => {
             opacity: { duration: 0.8, delay: 1 },
             y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
           }}
-          className="absolute bottom-4 flex flex-col items-center gap-1 text-foreground/40"
+          className="absolute bottom-4 hidden sm:flex flex-col items-center gap-1 text-foreground/40"
         >
           <span className="font-mono text-[10px] tracking-[0.3em] uppercase">Descubre más</span>
           <ChevronDown size={18} />

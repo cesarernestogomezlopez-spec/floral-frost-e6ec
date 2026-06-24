@@ -517,15 +517,15 @@ function Intro2({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               <li className="flex items-center gap-2 text-foreground/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--gold)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Lo que te gusta
               </li>
               <li className="flex items-center gap-2 text-foreground/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--gold)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Lo que no te gusta (quejas)
               </li>
               <li className="flex items-center gap-2 text-foreground/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--gold)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Sugerencias
               </li>
             </ul>
@@ -533,14 +533,14 @@ function Intro2({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
         </li>
 
         <li className="flex gap-4">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-gold)] text-sm font-semibold text-[color:var(--gold-foreground)]">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--grad-btn)] text-sm font-semibold text-white">
             2
           </span>
           <div className="flex-1">
             <p className="leading-relaxed text-foreground/90">
               Yo, como el Jefe de Grupo, voy a recibir los resultados (todo el
               feedback que usted envíe será{" "}
-              <span className="font-semibold text-[color:var(--gold)]">totalmente anónimo</span>) y
+              <span className="font-semibold text-primary">totalmente anónimo</span>) y
               voy a resumir los problemas en un solo{" "}
               <span className="inline-flex items-center gap-1 font-medium">
                 <FileText className="h-3.5 w-3.5" />
@@ -552,11 +552,11 @@ function Intro2({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
         </li>
       </ol>
 
-      <div className="mt-8 rounded-xl border border-border/60 bg-input/30 p-5">
+      <div className="mt-8 rounded-2xl border border-border/60 bg-secondary/40 p-5">
         <div className="flex items-start gap-3">
-          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold)]" />
+          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--c-mint)]" />
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
               ¿Cuál es el propósito?
             </p>
             <p className="mt-2 text-sm leading-relaxed text-foreground/90">
@@ -571,14 +571,14 @@ function Intro2({ onBack, onNext }: { onBack: () => void; onNext: () => void }) 
         <button
           type="button"
           onClick={onBack}
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Atrás
         </button>
         <button
           type="button"
           onClick={onNext}
-          className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[image:var(--gradient-gold)] px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_50px_-10px_oklch(0.85_0.19_118_/_0.8)]"
+          className="btn-portal group relative inline-flex items-center gap-2 overflow-hidden px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
         >
           Empezar
           <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -599,18 +599,18 @@ function Terms({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[oklch(0.85_0.19_118_/_0.1)]">
-          <ShieldCheck className="h-5 w-5 text-[color:var(--gold)]" />
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 bg-primary/10">
+          <ShieldCheck className="h-5 w-5 text-primary" />
         </div>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
           Términos y Condiciones
         </p>
       </div>
 
       <ul className="space-y-4">
         {items.map((text, i) => (
-          <li key={i} className="flex gap-4 rounded-xl border border-border/60 bg-input/30 p-5">
-            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-gold)] text-xs font-semibold text-[color:var(--gold-foreground)]">
+          <li key={i} className="flex gap-4 rounded-2xl border border-border/60 bg-secondary/40 p-5">
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[image:var(--grad-btn)] text-xs font-semibold text-white">
               {i + 1}
             </span>
             <p className="text-sm leading-relaxed text-foreground/90">{text}</p>
@@ -619,10 +619,10 @@ function Terms({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
       </ul>
 
       <label
-        className={`mt-8 flex cursor-pointer items-start gap-3 rounded-xl border p-5 transition-all ${
+        className={`mt-8 flex cursor-pointer items-start gap-3 rounded-2xl border p-5 transition-all ${
           accepted
-            ? "border-[color-mix(in_oklab,var(--gold)_60%,transparent)] bg-[oklch(0.85_0.19_118_/_0.08)] shadow-[0_0_0_4px_oklch(0.85_0.19_118_/_0.1)]"
-            : "border-border/60 bg-input/30 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)]"
+            ? "border-primary/60 bg-primary/[0.08] shadow-[0_0_0_4px_hsl(var(--primary)/0.15)]"
+            : "border-border/60 bg-secondary/40 hover:border-primary/40"
         }`}
       >
         <input
@@ -634,11 +634,11 @@ function Terms({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
         <span
           className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md border transition-all ${
             accepted
-              ? "border-[color:var(--gold)] bg-[image:var(--gradient-gold)]"
+              ? "border-primary bg-[image:var(--grad-btn)]"
               : "border-border bg-background"
           }`}
         >
-          {accepted && <Check className="h-3.5 w-3.5 text-[color:var(--gold-foreground)]" />}
+          {accepted && <Check className="h-3.5 w-3.5 text-white" />}
         </span>
         <span className="text-sm leading-relaxed text-foreground/90">
           He leído y acepto los términos y condiciones. Me comprometo a usar
@@ -651,7 +651,7 @@ function Terms({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
         <button
           type="button"
           onClick={onBack}
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Atrás
         </button>
@@ -659,7 +659,7 @@ function Terms({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
           type="button"
           onClick={onNext}
           disabled={!accepted}
-          className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[image:var(--gradient-gold)] px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_50px_-10px_oklch(0.85_0.19_118_/_0.8)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+          className="btn-portal group relative inline-flex items-center gap-2 overflow-hidden px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
         >
           Aceptar y continuar
           <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -729,7 +729,7 @@ function ClassesPhase({
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
             Salón 202 · Turno matutino
           </p>
           <p className="mt-1 font-display text-lg">
@@ -739,7 +739,7 @@ function ClassesPhase({
         <button
           type="button"
           onClick={() => { setTutorialStep(0); setTutorialDone(false); }}
-          className="text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Ver tutorial
         </button>
@@ -747,7 +747,7 @@ function ClassesPhase({
 
       <div className="mb-8 h-1.5 w-full overflow-hidden rounded-full bg-border/60">
         <div
-          className="h-full rounded-full bg-[image:var(--gradient-gold)] transition-all duration-500"
+          className="h-full rounded-full bg-[image:var(--grad-btn)] transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -761,25 +761,25 @@ function ClassesPhase({
               type="button"
               disabled={!tutorialDone}
               onClick={() => onSelect(c)}
-              className={`group relative flex items-center justify-between rounded-xl border p-4 text-left transition-all ${
+              className={`group relative flex items-center justify-between rounded-2xl border p-4 text-left transition-all ${
                 isDone
-                  ? "border-[color-mix(in_oklab,var(--gold)_60%,transparent)] bg-[oklch(0.85_0.19_118_/_0.08)]"
-                  : "border-border bg-input/30 hover:border-[color-mix(in_oklab,var(--gold)_40%,transparent)] hover:bg-input/50"
+                  ? "border-[color:var(--c-mint)]/50 bg-[color:var(--c-mint)]/[0.08]"
+                  : "border-border bg-secondary/40 hover:border-primary/40 hover:bg-secondary/60"
               } ${tutorialDone ? "cursor-pointer hover:-translate-y-0.5" : "cursor-not-allowed opacity-70"}`}
             >
               <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-[color-mix(in_oklab,var(--gold)_30%,transparent)] bg-[image:var(--gradient-gold)] font-display text-sm text-[color:var(--gold-foreground)]">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-primary/30 bg-[image:var(--grad-btn)] font-display text-sm text-white">
                   {idx + 1}
                 </span>
                 <div>
                   <p className="font-display text-base leading-none text-foreground">{c}</p>
-                  <p className="mt-1.5 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                     {isDone ? "Completada" : "Pendiente"}
                   </p>
                 </div>
               </div>
               {isDone ? (
-                <Check className="h-5 w-5 text-[color:var(--gold)]" />
+                <Check className="h-5 w-5 text-[color:var(--c-mint)]" />
               ) : !tutorialDone ? (
                 <Lock className="h-4 w-4 text-muted-foreground/60" />
               ) : (
@@ -794,7 +794,7 @@ function ClassesPhase({
         <button
           type="button"
           onClick={onBack}
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Atrás
         </button>
@@ -802,7 +802,7 @@ function ClassesPhase({
           <button
             type="button"
             onClick={onSubmit}
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[image:var(--gradient-gold)] px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+            className="btn-portal group relative inline-flex items-center gap-2 overflow-hidden px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
           >
             Enviar encuesta
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -862,22 +862,22 @@ function TutorialOverlay({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-background/85 backdrop-blur-md" />
-      <div className="luxe-card relative w-full max-w-md rounded-2xl p-1.5 animate-in fade-in zoom-in-95 duration-300">
+      <div className="glass-strong relative w-full max-w-md rounded-2xl p-1.5 animate-in fade-in zoom-in-95 duration-300">
         <div className="rounded-[14px] bg-card/90 p-7 backdrop-blur-xl">
           <button
             type="button"
             onClick={onSkip}
             aria-label="Saltar"
-            className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-input/50 hover:text-foreground"
+            className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground"
           >
             <X className="h-4 w-4" />
           </button>
 
-          <div className="grid h-12 w-12 place-items-center rounded-xl border border-[color-mix(in_oklab,var(--gold)_35%,transparent)] bg-[image:var(--gradient-gold)]">
-            <Icon className="h-5 w-5 text-[color:var(--gold-foreground)]" />
+          <div className="grid h-12 w-12 place-items-center rounded-xl border border-primary/35 bg-[image:var(--grad-btn)]">
+            <Icon className="h-5 w-5 text-white" />
           </div>
 
-          <p className="mt-5 text-xs uppercase tracking-[0.25em] text-[color:var(--gold)]/90">
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.25em] text-primary/90">
             Tutorial · {step + 1}/{steps.length}
           </p>
           <h3 className="mt-2 font-display text-2xl leading-tight">{s.title}</h3>
@@ -888,8 +888,8 @@ function TutorialOverlay({
               {s.bullets.map((b, i) => {
                 const BIcon = b.icon;
                 return (
-                  <li key={i} className="flex items-start gap-3 rounded-lg border border-border/60 bg-input/30 p-3">
-                    <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md bg-[oklch(0.85_0.19_118_/_0.1)] text-[color:var(--gold)]">
+                  <li key={i} className="flex items-start gap-3 rounded-xl border border-border/60 bg-secondary/40 p-3">
+                    <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
                       <BIcon className="h-3.5 w-3.5" />
                     </span>
                     <div>
@@ -907,7 +907,7 @@ function TutorialOverlay({
               <span
                 key={i}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === step ? "w-6 bg-[color:var(--gold)]" : "w-1.5 bg-border"
+                  i === step ? "w-6 bg-primary" : "w-1.5 bg-border"
                 }`}
               />
             ))}
@@ -918,14 +918,14 @@ function TutorialOverlay({
               type="button"
               onClick={onPrev}
               disabled={step === 0}
-              className="text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground disabled:opacity-30"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground disabled:opacity-30"
             >
               Atrás
             </button>
             <button
               type="button"
               onClick={onNext}
-              className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5"
+              className="btn-portal group inline-flex items-center gap-2 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
             >
               {isLast ? "Empezar" : "Siguiente"}
               <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -965,18 +965,18 @@ function ClassRatingDialog({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-6 sm:items-center sm:py-10">
       <div className="absolute inset-0 bg-background/85 backdrop-blur-md" onClick={onClose} />
-      <div className="luxe-card relative my-auto w-full max-w-xl rounded-2xl p-1.5 animate-in fade-in zoom-in-95 duration-300">
+      <div className="glass-strong relative my-auto w-full max-w-xl rounded-2xl p-1.5 animate-in fade-in zoom-in-95 duration-300">
         <div className="rounded-[14px] bg-card/95 p-6 backdrop-blur-xl sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--gold)]/90">Materia</p>
+              <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/90">Materia</p>
               <h3 className="mt-1.5 font-display text-3xl leading-tight">{classname}</h3>
             </div>
             <button
               type="button"
               onClick={onClose}
               aria-label="Cerrar"
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-input/50 hover:text-foreground"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground"
             >
               <X className="h-4 w-4" />
             </button>
@@ -1031,7 +1031,7 @@ function ClassRatingDialog({
             <button
               type="button"
               onClick={onClose}
-              className="text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
             >
               Cancelar
             </button>
@@ -1039,7 +1039,7 @@ function ClassRatingDialog({
               type="button"
               onClick={() => canSubmit && onSave(a)}
               disabled={!canSubmit}
-              className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-gold)] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--gold-foreground)] shadow-[0_10px_40px_-10px_oklch(0.85_0.19_118_/_0.6)] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+              className="btn-portal group inline-flex items-center gap-2 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
             >
               Guardar materia
               <Check className="h-3.5 w-3.5" />
@@ -1068,7 +1068,7 @@ function RatingField({
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
           Calificación al maestro
         </span>
         <span className="text-xs text-muted-foreground/80">
@@ -1090,7 +1090,7 @@ function RatingField({
               <Star
                 className={`h-8 w-8 transition-all ${
                   active
-                    ? "fill-[color:var(--gold)] text-[color:var(--gold)] drop-shadow-[0_0_8px_oklch(0.85_0.19_118_/_0.5)]"
+                    ? "fill-[color:var(--c-yellow)] text-[color:var(--c-yellow)] drop-shadow-[0_0_8px_color-mix(in_oklab,var(--c-yellow)_50%,transparent)]"
                     : "text-muted-foreground/40"
                 }`}
               />
@@ -1120,8 +1120,8 @@ function RatingTextarea({
   const max = 400;
   const toneClasses =
     tone === "positive"
-      ? "border-[color-mix(in_oklab,var(--gold)_30%,transparent)] bg-[oklch(0.85_0.19_115_/_0.06)] text-[color:var(--gold)]"
-      : "border-[color-mix(in_oklab,var(--gold)_20%,transparent)] bg-[oklch(0.75_0.15_90_/_0.06)] text-[oklch(0.82_0.16_75)]";
+      ? "border-[color:var(--c-mint)]/30 bg-[color:var(--c-mint)]/[0.08] text-[color:var(--c-mint)]"
+      : "border-accent/30 bg-accent/[0.08] text-accent";
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
@@ -1141,7 +1141,7 @@ function RatingTextarea({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={hint}
-        className="w-full resize-none rounded-lg border border-border bg-input/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-[color-mix(in_oklab,var(--gold)_60%,transparent)] focus:bg-input focus:shadow-[0_0_0_4px_oklch(0.85_0.19_118_/_0.1)]"
+        className="w-full resize-none rounded-xl border border-border bg-input/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-all focus:border-primary/60 focus:bg-input focus:shadow-[0_0_0_4px_hsl(var(--primary)/0.15)]"
       />
     </div>
   );

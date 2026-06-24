@@ -46,7 +46,7 @@ const DownloadApp = () => {
               <p className="text-sm font-bold tracking-wide">SALÓN 202</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               to="/"
               className="glass-btn text-xs font-semibold tracking-[0.15em] uppercase hidden sm:inline-flex"
@@ -62,9 +62,10 @@ const DownloadApp = () => {
             <a
               href="https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/download/STABLE-202/PORTAL-202.apk"
               download
-              className="btn-portal px-5 sm:px-6 py-3 text-xs sm:text-sm tracking-[0.2em] uppercase"
+              className="btn-portal whitespace-nowrap px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm tracking-[0.12em] sm:tracking-[0.2em] uppercase"
             >
-              Descargar desde Portal 202
+              <span className="sm:hidden">Descargar</span>
+              <span className="hidden sm:inline">Descargar desde Portal 202</span>
             </a>
           </div>
         </motion.nav>

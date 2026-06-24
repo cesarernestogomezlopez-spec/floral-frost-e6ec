@@ -50,9 +50,7 @@ export const PortalModal = ({ open, onClose }: Props) => {
 
             <div className="grid sm:grid-cols-2 gap-5">
               <motion.a
-                href="https://portal-salon-202.cesarernestogomezlopez.workers.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="https://portal202jv3.com/"
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.97 }}
                 className="glass-strong glow-green rounded-2xl py-10 px-6 flex flex-col items-center justify-center gap-3 group"
