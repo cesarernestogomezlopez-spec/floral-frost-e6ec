@@ -2,57 +2,81 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Smartphone,
-  Bell,
   CalendarDays,
-  BookOpen,
-  ShieldCheck,
-  RefreshCw,
-  Headphones,
+  Sparkles,
+  GraduationCap,
+  BellRing,
+  Calculator,
+  LayoutDashboard,
+  Cake,
+  LayoutGrid,
+  Palette,
   ChevronDown,
 } from "lucide-react";
-import appScreenshot from "@/assets/app-screenshot.png";
-import featureHorario from "@/assets/feature-horario.png";
-import featureNotificaciones from "@/assets/feature-notificaciones.png";
-import featureSoporte from "@/assets/feature-soporte.png";
-import featureRecursosEscolares from "@/assets/recursos-escolares.png";
-import featureActualizaciones from "@/assets/actualizaciones.png";
+import featureHorario from "@/assets/feature-horario.jpeg";
+import featureResumen from "@/assets/resumen-dia.jpeg";
+import featureEius from "@/assets/feature-soporte.jpeg";
+import featureNotificaciones from "@/assets/feature-notificaciones.jpeg";
+import featureCalculadora from "@/assets/feature-calculadora.jpeg";
+import featureInicio from "@/assets/app-screenshot.jpeg";
+import featureCumples from "@/assets/feature-cumpleanios.jpeg";
+import featureExtras from "@/assets/recursos-escolares.jpeg";
+import featureAjustes from "@/assets/theme.jpeg";
 
 const features = [
   {
+    icon: Sparkles,
+    title: "TECOS-GPT resume tu día",
+    desc: "Lee fotos y archivos PDF para convertir tareas, avisos y apuntes en un resumen diario claro.",
+    image: featureResumen,
+  },
+  {
+    icon: GraduationCap,
+    title: "E.I.U.S. dentro de la app",
+    desc: "Consulta la plataforma escolar sin salir de Portal 202 y mantén tus herramientas académicas reunidas.",
+    image: featureEius,
+  },
+  {
     icon: CalendarDays,
-    title: "Horario en tu bolsillo",
-    desc: "Consulta tu horario semanal de forma rápida y sin complicaciones.",
+    title: "Tu horario, siempre a la mano",
+    desc: "Revisa la semana completa en segundos, con una vista hecha para el ritmo del salón.",
     image: featureHorario,
   },
   {
-    icon: Bell,
-    title: "Notificaciones",
-    desc: "Recibe avisos importantes del salón al instante.",
+    icon: BellRing,
+    title: "Avisos que sí llegan",
+    desc: "Recibe notificaciones importantes del salón y entérate a tiempo de cada actualización.",
     image: featureNotificaciones,
   },
   {
-    icon: BookOpen,
-    title: "Recursos escolares",
-    desc: "Acceso directo a materiales y herramientas del portal.",
-    image: featureRecursosEscolares,
+    icon: Calculator,
+    title: "Calculadora escolar integrada",
+    desc: "Resuelve operaciones rápidas desde la misma app, sin saltar entre herramientas.",
+    image: featureCalculadora,
   },
   {
-    icon: ShieldCheck,
-    title: "Soporte oficial E.I.U.S.",
-    desc: "Integración completa con la plataforma oficial de la escuela.",
-    image: featureSoporte,
+    icon: LayoutDashboard,
+    title: "Un inicio pensado para 202",
+    desc: "Horario, accesos y novedades aparecen desde el primer vistazo, sin menús innecesarios.",
+    image: featureInicio,
   },
   {
-    icon: RefreshCw,
-    title: "Actualizaciones seguidas",
-    desc: "Mejoras y nuevas funciones publicadas constantemente.",
-    image: featureActualizaciones,
+    icon: Cake,
+    title: "Cumpleaños del salón",
+    desc: "Celebra a tus compañeros con recordatorios visibles y una sección dedicada a la comunidad.",
+    image: featureCumples,
   },
   {
-    icon: Headphones,
-    title: "Soporte instantáneo",
-    desc: "Resolvemos tus dudas y problemas en el momento.",
-    image: appScreenshot,
+    icon: LayoutGrid,
+    title: "Más recursos, menos vueltas",
+    desc: "Encuentra accesos escolares y utilidades extra organizados en un solo lugar.",
+    image: featureExtras,
+  },
+  {
+    icon: Palette,
+    title: "La app también se adapta a ti",
+    desc: "Personaliza la apariencia y los ajustes para que Portal 202 se sienta realmente tuyo.",
+    image: featureAjustes,
   },
 ];
 
@@ -152,10 +176,10 @@ export const AppPromo = () => {
           className="text-center max-w-2xl mx-auto px-4"
         >
           <p className="font-mono text-[11px] tracking-[0.4em] uppercase text-foreground/50 mb-3">
-            Ventajas
+            Nueve formas de simplificar tu día
           </p>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-            Todo lo que necesitas, <span className="gradient-text">en una sola app</span>
+            Hecha para el salón, <span className="gradient-text">útil todos los días</span>
           </h3>
         </motion.div>
       </section>
