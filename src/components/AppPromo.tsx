@@ -50,8 +50,8 @@ const features = [
   },
   {
     icon: Calculator,
-    title: "Calculadora escolar integrada",
-    desc: "Resuelve operaciones rápidas desde la misma app, sin saltar entre herramientas.",
+    title: "Descubre cuánto necesitas",
+    desc: "Calcula los puntos que debes obtener en tus próximos parciales para alcanzar la calificación que deseas.",
     image: featureCalculadora,
   },
   {
