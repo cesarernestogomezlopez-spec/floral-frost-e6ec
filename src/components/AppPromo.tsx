@@ -6,6 +6,7 @@ import {
   Sparkles,
   GraduationCap,
   BellRing,
+  Watch,
   Calculator,
   LayoutDashboard,
   Cake,
@@ -17,6 +18,7 @@ import featureHorario from "@/assets/feature-horario.jpeg";
 import featureResumen from "@/assets/resumen-dia.jpeg";
 import featureEius from "@/assets/feature-soporte.jpeg";
 import featureNotificaciones from "@/assets/feature-notificaciones.jpeg";
+import featureNotificacionesWatch from "@/assets/feature-notificaciones-smartwatch.jpeg";
 import featureCalculadora from "@/assets/feature-calculadora.jpeg";
 import featureInicio from "@/assets/app-screenshot.jpeg";
 import featureCumples from "@/assets/feature-cumpleanios.jpeg";
@@ -47,6 +49,12 @@ const features = [
     title: "Avisos que sí llegan",
     desc: "Recibe notificaciones importantes del salón y entérate a tiempo de cada actualización.",
     image: featureNotificaciones,
+  },
+  {
+    icon: Watch,
+    title: "También en tu muñeca",
+    desc: "Las alertas de tu clase actual y los avisos del salón llegan también a tu Apple Watch.",
+    image: featureNotificacionesWatch,
   },
   {
     icon: Calculator,
