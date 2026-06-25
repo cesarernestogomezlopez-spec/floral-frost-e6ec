@@ -13,6 +13,7 @@ import {
   LayoutGrid,
   Palette,
   ChevronDown,
+  type LucideIcon,
 } from "lucide-react";
 import featureHorario from "@/assets/feature-horario.jpeg";
 import featureResumen from "@/assets/resumen-dia.jpeg";
@@ -25,7 +26,15 @@ import featureCumples from "@/assets/feature-cumpleanios.jpeg";
 import featureExtras from "@/assets/recursos-escolares.jpeg";
 import featureAjustes from "@/assets/theme.jpeg";
 
-const features = [
+type Feature = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  image: string;
+  device?: "watch";
+};
+
+const features: Feature[] = [
   {
     icon: Sparkles,
     title: "TECOS-GPT resume tu día",
@@ -53,8 +62,9 @@ const features = [
   {
     icon: Watch,
     title: "También en tu muñeca",
-    desc: "Las alertas de tu clase actual y los avisos del salón llegan también a tu Apple Watch.",
+    desc: "Las alertas de tu clase actual y los avisos del salón llegan también a tu Apple Watch/Smartwatch.",
     image: featureNotificacionesWatch,
+    device: "watch",
   },
   {
     icon: Calculator,
@@ -93,9 +103,26 @@ const APK_URL =
 const IOS_URL =
   "https://github.com/cesarernestogomezlopez-spec/floral-frost-e6ec/releases/latest/download/PORTAL-202-IOS.ipa";
 
+// Apple Watch / smartwatch mockup — squircle body with a digital crown + side
+// button. Used for the "También en tu muñeca" slide instead of the phone frame.
+function WatchMock({ image, className = "" }: { image: string; className?: string }) {
+  return (
+    <div className={`relative ${className}`}>
+      <div className="absolute right-[-7px] top-[31%] h-9 w-2.5 rounded-full bg-gradient-to-b from-neutral-500 via-neutral-700 to-neutral-900 shadow" />
+      <div className="absolute right-[-5px] top-[55%] h-12 w-1.5 rounded-full bg-neutral-700/90" />
+      <div className="relative aspect-[41/50] rounded-[34%] p-[7px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
+        <div className="h-full w-full overflow-hidden rounded-[30%] bg-black">
+          <img src={image} alt="Apple Watch / Smartwatch" className="h-full w-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export const AppPromo = () => {
   const [active, setActive] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const isWatchActive = features[active]?.device === "watch";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 320);
@@ -197,10 +224,14 @@ export const AppPromo = () => {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 max-w-6xl mx-auto px-4">
           {/* Sticky phone */}
           <div className="hidden lg:flex sticky top-24 h-[calc(100vh-6rem)] items-center justify-center">
-            <div className="relative w-64 xl:w-72">
+            <div className="relative flex w-64 items-center justify-center xl:w-72">
               <div className="absolute inset-0 rounded-[3rem] bg-[var(--orb-1)] blur-3xl scale-90" />
-              {/* Note 10+ style frame: ultra-thin bezels, glossy black, subtle side highlight */}
-              <div className="relative rounded-[2.4rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
+              {/* Phone frame — fades out on the watch slide */}
+              <motion.div
+                animate={{ opacity: isWatchActive ? 0 : 1, scale: isWatchActive ? 0.92 : 1 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="relative w-full rounded-[2.4rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl"
+              >
                 <div className="rounded-[2.25rem] p-[2px] bg-black">
                   <div className="relative rounded-[2.15rem] bg-black overflow-hidden aspect-[9/19.5]">
                     {features.map((f, i) => (
@@ -225,7 +256,16 @@ export const AppPromo = () => {
                 {/* glossy side highlights to mimic curved edge */}
                 <div className="pointer-events-none absolute inset-y-6 left-0 w-[2px] bg-gradient-to-b from-transparent via-white/20 to-transparent rounded-l-[2.4rem]" />
                 <div className="pointer-events-none absolute inset-y-6 right-0 w-[2px] bg-gradient-to-b from-transparent via-white/20 to-transparent rounded-r-[2.4rem]" />
-              </div>
+              </motion.div>
+              {/* Watch frame — fades in only on the watch slide */}
+              <motion.div
+                animate={{ opacity: isWatchActive ? 1 : 0, scale: isWatchActive ? 1 : 0.82 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 z-20 flex items-center justify-center"
+                style={{ pointerEvents: isWatchActive ? "auto" : "none" }}
+              >
+                <WatchMock image={featureNotificacionesWatch} className="w-44 xl:w-48" />
+              </motion.div>
             </div>
           </div>
 
@@ -242,23 +282,30 @@ export const AppPromo = () => {
                 className="min-h-[80vh] flex flex-col justify-center"
               >
                 {/* Mobile inline screenshot */}
-                <div className="lg:hidden mb-8 mx-auto w-56">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-[2.2rem] bg-[var(--orb-1)] blur-2xl scale-90" />
-                    <div className="relative rounded-[2rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
-                      <div className="rounded-[1.85rem] p-[2px] bg-black">
-                        <div className="relative rounded-[1.75rem] bg-black overflow-hidden aspect-[9/19.5]">
-                          <img
-                            src={f.image}
-                            alt={f.title}
-                            className="absolute inset-0 w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-black ring-1 ring-neutral-800 z-10" />
+                <div className="lg:hidden mb-8 mx-auto flex w-56 justify-center">
+                  {f.device === "watch" ? (
+                    <div className="relative w-40">
+                      <div className="absolute inset-0 rounded-[2.2rem] bg-[var(--orb-1)] blur-2xl scale-90" />
+                      <WatchMock image={f.image} />
+                    </div>
+                  ) : (
+                    <div className="relative w-full">
+                      <div className="absolute inset-0 rounded-[2.2rem] bg-[var(--orb-1)] blur-2xl scale-90" />
+                      <div className="relative rounded-[2rem] p-[3px] bg-gradient-to-b from-neutral-700 via-black to-neutral-800 shadow-2xl">
+                        <div className="rounded-[1.85rem] p-[2px] bg-black">
+                          <div className="relative rounded-[1.75rem] bg-black overflow-hidden aspect-[9/19.5]">
+                            <img
+                              src={f.image}
+                              alt={f.title}
+                              className="absolute inset-0 w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-black ring-1 ring-neutral-800 z-10" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-3 mb-4">
