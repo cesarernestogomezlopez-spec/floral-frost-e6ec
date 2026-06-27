@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>floral-frost-e6ec motion audit — 2026-06-26</title>
+  <style>
+    /* ── 1. Demo shell tokens (from references/demo-shell.html) ───────── */
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --border: #e5e5e5;
+      --accent: #a855f7;
+      --accent2: #f472b6;
+      --loop-dim: rgba(0, 0, 0, 0.45);
+      --card-radius: 12px;
+      --card-padding: 20px;
+      --gap: 12px;
+      --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --fg: #f0f0f0;
+        --border: #333333;
+        --accent: #c084fc;
+        --accent2: #f472b6;
+        --loop-dim: rgba(240, 240, 240, 0.45);
+      }
+    }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      margin: 0 auto;
+      max-width: 960px;
+      padding: 48px 24px;
+      line-height: 1.5;
+    }
+    .demo-card {
+      position: relative;
+      background: var(--bg);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: var(--card-padding);
+      max-width: 360px;
+      min-width: 280px;
+      font-family: var(--sans);
+      outline: none;
+    }
+    .demo-card:focus-visible { outline: none; }
+    .demo-card__header {
+      font-size: 0.875rem; font-weight: 600; color: var(--fg);
+      margin-bottom: 4px; padding-right: 72px;
+    }
+    .demo-card__subhead {
+      font-family: var(--mono); font-size: 0.75rem;
+      color: var(--loop-dim); margin-bottom: var(--gap);
+    }
+    .demo-card__stage {
+      background: var(--bg); border: 1px dashed var(--border);
+      border-radius: 8px; padding: 24px; min-height: 100px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .demo-card__loop-indicator {
+      position: absolute; top: 12px; right: 12px;
+      font-family: var(--mono); font-size: 0.7rem;
+      color: var(--loop-dim); letter-spacing: 0.02em; user-select: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .demo-card__loop-indicator { display: none; }
+      [class*="__motion-target"] { animation: none !important; transition: none !important; }
+    }
+
+    /* ── 2. Report layout tokens ──────────────────────────────────────── */
+    .report-hero h1 { font-size: 1.75rem; margin: 0 0 4px; }
+    .report-hero__date { font-family: var(--mono); color: var(--loop-dim); font-size: 0.875rem; margin: 0 0 16px; }
+    .report-hero__counts { font-size: 1rem; margin: 0 0 8px; }
+    .report-hero__counts a { color: inherit; text-decoration: none; border-bottom: 1px dashed var(--border); }
+    .report-hero__counts a:hover { border-bottom-style: solid; }
+    .report-hero__primary { font-family: var(--mono); color: var(--loop-dim); font-size: 0.875rem; margin: 0; }
+    .report-assessment { margin: 32px 0; font-size: 1.05rem; line-height: 1.6; }
+    .perspective-section { margin: 48px 0; padding-top: 24px; border-top: 1px solid var(--border); }
+    .perspective-section h2 { font-size: 1.25rem; margin: 0 0 16px; }
+    .perspective-section h3 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--loop-dim); margin: 24px 0 8px; }
+    .perspective-section ul { margin: 0; padding-left: 20px; }
+    .perspective-section li { margin: 6px 0; }
+    .perspective-section__empty { font-style: italic; color: var(--loop-dim); padding: 12px 0; }
+    .perspective-section__quote { margin-top: 24px; padding: 12px 16px; background: rgba(168,85,247,0.06); border-left: 3px solid var(--accent); font-size: 0.95rem; }
+    .finding-row { display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: start; margin: 24px 0; }
+    .finding-row__prose h4 { margin: 4px 0 8px; font-size: 1.05rem; }
+    .finding-row__prose p { margin: 8px 0; }
+    .finding-row__severity { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; margin: 0; color: var(--loop-dim); }
+    .finding-row__location { font-size: 0.85rem; }
+    code { font-family: var(--mono); font-size: 0.85em; background: rgba(168,85,247,0.09); padding: 1px 5px; border-radius: 4px; }
+    .recommendations { margin: 48px 0; }
+    .recommendations h2 { font-size: 1.25rem; }
+    .recommendations table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .recommendations th, .recommendations td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .reference-summary { margin: 48px 0; padding-top: 24px; border-top: 1px solid var(--border); }
+    .reference-summary ul { padding-left: 20px; }
+    @media (max-width: 768px) {
+      .finding-row { grid-template-columns: 1fr; }
+      .demo-card { max-width: 100%; }
+    }
+
+    /* ── 3. Per-finding motion (1-indexed across report) ──────────────── */
+
+    /* Finding 1 — reduced-motion-aware enter (the demo's own reduced-motion guard makes the point) */
+    @keyframes motion-1-enter {
+      0%   { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+      66%  { opacity: 1; transform: translateY(0); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .demo-card-1__motion-target {
+      display: block; width: 200px; padding: 14px 16px; border-radius: 14px;
+      font-weight: 700; font-size: 0.85rem; text-align: center;
+      background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.35);
+      opacity: 1; transform: translateY(0); filter: blur(0);
+      animation: motion-1-enter 3s cubic-bezier(.22,1,.36,1) infinite;
+    }
+
+    /* Finding 2 — add an exit: enter, hold, subtle exit, re-enter (ends visible) */
+    @keyframes motion-2-presence {
+      0%   { opacity: 1; transform: translateY(0); }
+      30%  { opacity: 1; transform: translateY(0); }
+      45%  { opacity: 0; transform: translateY(-8px); }   /* subtler exit (up + fade) */
+      55%  { opacity: 0; transform: translateY(10px); }   /* gone, repositioned below */
+      80%  { opacity: 1; transform: translateY(0); }      /* enter back */
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .demo-card-2__motion-target {
+      display: block; width: 200px; padding: 14px 16px; border-radius: 14px;
+      font-weight: 700; font-size: 0.85rem; text-align: center;
+      background: rgba(244,114,182,0.14); border: 1px solid rgba(244,114,182,0.4);
+      opacity: 1; transform: translateY(0);
+      animation: motion-2-presence 3s cubic-bezier(.22,1,.36,1) infinite;
+    }
+
+    /* Finding 3 — reveal once: enter and stay put for the rest of the loop */
+    @keyframes motion-3-once {
+      0%   { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+      40%  { opacity: 1; transform: translateY(0); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .demo-card-3__motion-target {
+      display: block; width: 200px; padding: 18px 16px; border-radius: 14px;
+      font-weight: 700; font-size: 0.85rem; text-align: center;
+      background: rgba(52,211,153,0.14); border: 1px solid rgba(52,211,153,0.4);
+      opacity: 1; transform: translateY(0); filter: blur(0);
+      animation: motion-3-once 3s cubic-bezier(.22,1,.36,1) infinite;
+    }
+
+    /* Finding 4 — shimmer ONCE on load, then rest (not perpetual) */
+    @keyframes motion-4-shimmer {
+      0%   { background-position: 0% 50%; }
+      55%  { background-position: 100% 50%; }
+      66%  { background-position: 50% 50%; }
+      100% { background-position: 50% 50%; }   /* rest = static gradient */
+    }
+    .demo-card-4__motion-target {
+      font-size: 1.6rem; font-weight: 900; letter-spacing: -0.01em;
+      background: linear-gradient(135deg, #a855f7, #f472b6, #a855f7);
+      background-size: 200% 200%; background-position: 50% 50%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      animation: motion-4-shimmer 3s ease-in-out infinite;
+    }
+
+    /* Finding 5 — glow on hover, then rest (replaces perpetual pulse) */
+    @keyframes motion-5-glow {
+      0%   { box-shadow: 0 0 0 1px rgba(52,211,153,0.28), 0 2px 8px rgba(52,211,153,0.12); transform: translateY(0); }
+      40%  { box-shadow: 0 0 0 1px rgba(52,211,153,0.5), 0 10px 30px rgba(52,211,153,0.4); transform: translateY(-2px); }
+      60%  { box-shadow: 0 0 0 1px rgba(52,211,153,0.5), 0 10px 30px rgba(52,211,153,0.4); transform: translateY(-2px); }
+      100% { box-shadow: 0 0 0 1px rgba(52,211,153,0.28), 0 2px 8px rgba(52,211,153,0.12); transform: translateY(0); }
+    }
+    .demo-card-5__motion-target {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 100px; font-weight: 800; font-size: 0.85rem;
+      background: var(--bg); border: 1px solid rgba(52,211,153,0.4); color: var(--fg);
+      box-shadow: 0 0 0 1px rgba(52,211,153,0.28), 0 2px 8px rgba(52,211,153,0.12);
+      animation: motion-5-glow 3s cubic-bezier(.22,1,.36,1) infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="report-hero">
+    <h1>floral-frost-e6ec motion audit</h1>
+    <p class="report-hero__date">2026-06-26</p>
+    <p class="report-hero__counts">
+      <a href="#critical-findings">🔴 Critical: 1</a> ·
+      <a href="#important-findings">🟡 Important: 4</a> ·
+      <a href="#opportunity-findings">🟢 Opportunities: 5</a>
+    </p>
+    <p class="report-hero__primary">Primary: Jakub Krehel — Production Polish · Secondary: Jhey Tompkins — Experimentation &amp; Delight · Selective: Emil Kowalski</p>
+  </header>
+
+  <section class="report-assessment">
+    <p>
+      A genuinely charming marketing surface with a real motion vocabulary — framer-motion entrances with the
+      portal's spring ease, consistent <code>whileHover</code>/<code>whileTap</code> press feedback, blur-in
+      reveals, and proper <em>exits</em> on the modal, splash, promo bar, and route transitions. The aesthetic
+      instincts are good. But it has one real <strong>Critical</strong> the portal didn't: the CSS
+      <code>prefers-reduced-motion</code> guard only covers <em>CSS</em> animations — <strong>every framer-motion
+      animation ignores the user's reduced-motion preference</strong>, because there's no <code>MotionConfig</code>
+      or <code>useReducedMotion</code>. Below that, the issues cluster around <em>ubiquity and perpetuity</em>:
+      an infinite gradient shimmer runs on <strong>~14 headings across every page</strong>, two CTA styles
+      <strong>pulse forever</strong>, the survey's custom overlays and step containers <strong>snap out</strong>
+      with no exit, and one scroll reveal re-fires every time. For a teen-facing landing, the delight is on-brand
+      — the fix isn't <em>less</em> delight, it's making delight a <em>moment</em> instead of an ambient hum, and
+      honoring the accessibility preference for users who opt out.
+    </p>
+  </section>
+
+  <!-- ════════════════ PRIMARY: JAKUB ════════════════ -->
+  <section class="perspective-section" id="perspective-jakub">
+    <h2>Jakub Krehel — Production Polish</h2>
+
+    <div class="perspective-section__working-well">
+      <h3>What's Working Well</h3>
+      <ul>
+        <li>✓ Exits are handled where framer-motion drives the UI — route transition, <code>PortalModal</code> (overlay fade + card <code>scale .95 / y 10</code> exit), <code>Splash</code>, and the promo sticky bar all have proper <code>exit</code> props inside <code>AnimatePresence</code> — <code>src/components/PortalModal.tsx:31</code></li>
+        <li>✓ The enter recipe is textbook Jakub: opacity + translateY + <em>blur</em> (e.g. the phone mockup and section reveals) — <code>src/components/AppPromo.tsx:279</code></li>
+        <li>✓ Exits are correctly subtler than enters — the modal enters <code>scale .92 / y 20</code> but exits only <code>scale .95 / y 10</code> — <code>src/components/PortalModal.tsx:29</code></li>
+        <li>✓ Consistent press feedback: <code>whileHover</code> + <code>whileTap{scale:0.97}</code> on every CTA, plus <code>.btn-portal:active{scale(.98)}</code> in CSS</li>
+        <li>✓ One shared signature easing <code>[0.22, 1, 0.36, 1]</code> across framer-motion and CSS (<code>--ease-spring</code>) — coherent motion identity</li>
+      </ul>
+    </div>
+
+    <div class="perspective-section__issues" id="jakub-issues">
+      <h3>Issues to Address</h3>
+
+      <div class="finding-row" id="finding-1">
+        <div class="finding-row__prose">
+          <p class="finding-row__severity">🔴 Critical</p>
+          <h4>1 · framer-motion ignores <code>prefers-reduced-motion</code></h4>
+          <p>
+            The CSS guard at <code>index.css:149</code> neutralizes CSS animations (splash blobs, the shimmer,
+            the pulse glows) — but framer-motion animates via JS (WAAPI/rAF), which a CSS media query cannot
+            touch. With <strong>no <code>MotionConfig</code> or <code>useReducedMotion</code> anywhere</strong>,
+            a vestibular-sensitive user who has reduced-motion enabled still gets every staged <code>y</code>
+            translate, every blur-in reveal, and the infinite floating scroll hint. The fix is a one-liner at
+            the app root: wrap the tree in <code>&lt;MotionConfig reducedMotion="user"&gt;</code> — framer-motion
+            then drops transforms/opacity-translate for those users automatically while keeping instant state
+            changes. This is the audit's only Critical.
+          </p>
+          <p class="finding-row__location"><code>src/main.tsx</code> / <code>src/App.tsx</code> (no MotionConfig) · CSS guard <code>src/index.css:149</code></p>
+        </div>
+        <article class="demo-card" tabindex="-1">
+          <div class="demo-card__loop-indicator">↻ looping</div>
+          <div class="demo-card__header">Enter that honors reduced-motion</div>
+          <div class="demo-card__subhead">280ms · MotionConfig reducedMotion="user"</div>
+          <div class="demo-card__stage">
+            <div class="demo-card-1__motion-target">Bienvenido 👋</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="finding-row" id="finding-2">
+        <div class="finding-row__prose">
+          <p class="finding-row__severity">🟡 Important</p>
+          <h4>2 · Survey overlays &amp; step containers snap out (no exit)</h4>
+          <p>
+            The framer-motion components animate out, but the survey's core flow uses tailwindcss-animate
+            <code>animate-in</code> on plain conditional renders — <code>{activeClass &amp;&amp; &lt;ClassRatingDialog/&gt;}</code>,
+            <code>{!tutorialDone &amp;&amp; &lt;TutorialOverlay/&gt;}</code>, and every step <code>&lt;div className="animate-in
+            fade-in slide-in-from-bottom-2"&gt;</code>. <code>animate-in</code> is enter-only: when the dialog closes
+            or you advance a step, the outgoing element is unmounted instantly while the new one slides in — a
+            visible snap on the most-interacted surface in the app. Wrap these in <code>AnimatePresence</code>
+            (or a Radix Dialog, which animates <code>data-state="closed"</code>) and give them a subtler exit.
+          </p>
+          <p class="finding-row__location"><code>src/pages/Survey.tsx:826</code>, <code>:813</code>, <code>:309</code> ff.</p>
+        </div>
+        <article class="demo-card" tabindex="-1">
+          <div class="demo-card__loop-indicator">↻ looping</div>
+          <div class="demo-card__header">AnimatePresence: enter + subtler exit</div>
+          <div class="demo-card__subhead">enter 300ms / exit 200ms · y + fade</div>
+          <div class="demo-card__stage">
+            <div class="demo-card-2__motion-target">Paso 2 / 5</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="finding-row" id="finding-3">
+        <div class="finding-row__prose">
+          <p class="finding-row__severity">🟡 Important</p>
+          <h4>3 · One <code>whileInView</code> re-animates on every scroll (missing <code>once</code>)</h4>
+          <p>
+            The promo reveals mostly pass <code>viewport={{ once: true }}</code> (good — a reveal is a
+            first-impression moment, not a recurring one). But the phone-mockup block omits it
+            (<code>viewport={{ amount: 0.4, margin: … }}</code> with no <code>once</code>), so it re-runs its
+            blur-in entrance every time the user scrolls it back into view. Repeated entrance animation on the
+            same element reads as a glitch and fatigues. Add <code>once: true</code> to match the rest.
+          </p>
+          <p class="finding-row__location"><code>src/components/AppPromo.tsx:278</code> (cf. the correct one at <code>:209</code>)</p>
+        </div>
+        <article class="demo-card" tabindex="-1">
+          <div class="demo-card__loop-indicator">↻ looping</div>
+          <div class="demo-card__header">Reveal once, then stay</div>
+          <div class="demo-card__subhead">translateY + blur · viewport once:true</div>
+          <div class="demo-card__stage">
+            <div class="demo-card-3__motion-target">Útil todos los días</div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="perspective-section__opportunities">
+      <h3>Opportunities</h3>
+      <ul>
+        <li>💡 The spring ease is already tokenized (<code>--ease-spring</code>) for CSS but framer-motion hard-codes <code>[0.22,1,0.36,1]</code> at ~10 call sites. A shared exported const would keep them from drifting — <code>src/components/AppPromo.tsx</code> ff.</li>
+      </ul>
+    </div>
+
+    <p class="perspective-section__quote"><strong>Through Jakub's lens:</strong> The production fundamentals are mostly here — real exits, blur-in enters, subtler exits, consistent press feedback. The gaps are an accessibility one-liner (<code>MotionConfig</code>) and finishing the job: give the survey's own overlays the same exit treatment the framer-motion components already get.</p>
+  </section>
+
+  <!-- ════════════════ SECONDARY: JHEY ════════════════ -->
+  <section class="perspective-section" id="perspective-jhey">
+    <h2>Jhey Tompkins — Experimentation &amp; Delight</h2>
+
+    <div class="perspective-section__working-well">
+      <h3>What's Working Well</h3>
+      <ul>
+        <li>✓ The splash is a real moment: blur+scale card entrance, a springy logo pop (<code>[0.34,1.56,0.64,1]</code>), drifting gradient blobs, bouncing dots with staggered delays — expressive and rare-frequency, so it's well-placed — <code>src/components/Splash.tsx:42</code></li>
+        <li>✓ Playful, on-brand delight throughout: the floating scroll-hint arrow, the watch/phone cross-fade, glassy gradient CTAs — the personality matches a teen audience — <code>src/components/AppPromo.tsx:192</code></li>
+        <li>✓ The gradient-shimmer heading is a lovely <em>idea</em> — it just needs containment (see below)</li>
+      </ul>
+    </div>
+
+    <div class="perspective-section__issues" id="jhey-issues">
+      <h3>Issues to Address</h3>
+
+      <div class="finding-row" id="finding-4">
+        <div class="finding-row__prose">
+          <p class="finding-row__severity">🟡 Important</p>
+          <h4>4 · The gradient shimmer runs forever on ~14 headings sitewide</h4>
+          <p>
+            <code>.gradient-text</code> applies <code>gradShift 3s infinite</code> and it's attached to nearly
+            every heading — the hero, all 8 survey titles, the 404, the promo, the schedule, the splash. Even
+            Jhey's golden rule holds here: <em>"the best animation goes unnoticed… and doesn't fatigue on repeat."</em>
+            A perpetual shimmer on every heading stops being delightful and becomes ambient noise that also
+            quietly burns battery. Keep the effect — make it a <em>moment</em>: shimmer once on load (or on the
+            hero only) and settle to a static gradient. That's more premium, not less playful.
+          </p>
+          <p class="finding-row__location"><code>src/index.css:198</code> · used at Home/Survey×8/NotFound/AppPromo/Schedule/Splash</p>
+        </div>
+        <article class="demo-card" tabindex="-1">
+          <div class="demo-card__loop-indicator">↻ looping</div>
+          <div class="demo-card__header">Shimmer once on load, then rest</div>
+          <div class="demo-card__subhead">1.5s sweep · then static gradient</div>
+          <div class="demo-card__stage">
+            <div class="demo-card-4__motion-target">SALÓN 202</div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="perspective-section__opportunities">
+      <h3>Opportunities</h3>
+      <ul>
+        <li>💡 <strong>The survey-complete state is the biggest missed delight moment.</strong> "Enviado con éxito" is currently just text + a static heading (<code>Survey.tsx:170</code>). This is a rare, earned, celebratory beat — exactly where Jhey says expressiveness belongs. A confetti burst or a springy check-draw on submit would make finishing the survey feel rewarding.</li>
+        <li>💡 The springy logo pop on the splash uses a great overshoot curve <code>[0.34,1.56,0.64,1]</code> — that same personality could carry the survey's per-step "done" check or the progress toward completion, tying the splash and the form together.</li>
+        <li>💡 Explore a CSS <code>linear()</code> spring for the one-shot shimmer settle (finding 4) — a tiny overshoot as the gradient lands reads more alive than a plain ease, and it's a fun technique to own.</li>
+      </ul>
+    </div>
+
+    <p class="perspective-section__quote"><strong>Through Jhey's lens:</strong> The delight instinct is strong and right for the audience — the move isn't to remove it, it's to <em>concentrate</em> it. Pull the perpetual shimmer back into a one-shot moment, and spend that energy on the celebration the survey-complete screen is currently missing.</p>
+  </section>
+
+  <!-- ════════════════ SELECTIVE: EMIL ════════════════ -->
+  <section class="perspective-section" id="perspective-emil">
+    <h2>Emil Kowalski — Restraint &amp; Speed</h2>
+
+    <div class="perspective-section__working-well">
+      <h3>What's Working Well</h3>
+      <ul>
+        <li>✓ Custom spring easing everywhere — no lazy default <code>ease</code> on the meaningful transitions</li>
+        <li>✓ Press feedback done right: <code>whileTap{scale:0.97}</code> / <code>active:scale-[0.98]</code>, never <code>scale(0)</code> pop-ins</li>
+        <li>✓ Route transition is appropriately quick and subtle (<code>0.28s</code>, opacity + <code>y:8</code>) with a subtler <code>y:-6</code> exit — <code>src/App.tsx:20</code></li>
+      </ul>
+    </div>
+
+    <div class="perspective-section__issues" id="emil-issues">
+      <h3>Issues to Address</h3>
+
+      <div class="finding-row" id="finding-5">
+        <div class="finding-row__prose">
+          <p class="finding-row__severity">🟡 Important</p>
+          <h4>5 · Pulsing CTA glows (<code>.glow-green</code> / <code>.glow-blue</code>)</h4>
+          <p>
+            Both glow classes run an infinite <code>box-shadow</code> pulse (<code>pulse-green/blue 2.8s
+            infinite</code>) and sit on the primary download CTAs, the portal-destination cards, and the sticky
+            bar. A "breathing CTA" is one of the clearest restraint anti-patterns — perpetual motion on the exact
+            elements the user is trying to read and click. The attention pull is real and it never stops. Move
+            the glow to <code>:hover</code>/<code>:focus-visible</code> (or a single one-shot pulse on mount):
+            the element rests until the user engages, then responds.
+          </p>
+          <p class="finding-row__location"><code>src/index.css:225</code>, <code>:234</code> · used in AppPromo &amp; PortalModal</p>
+        </div>
+        <article class="demo-card" tabindex="-1">
+          <div class="demo-card__loop-indicator">↻ looping</div>
+          <div class="demo-card__header">Glow on hover, not a perpetual pulse</div>
+          <div class="demo-card__subhead">200ms · box-shadow on :hover</div>
+          <div class="demo-card__stage">
+            <div class="demo-card-5__motion-target">⬇ Descargar APK</div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="perspective-section__opportunities">
+      <h3>Opportunities</h3>
+      <ul>
+        <li>💡 The survey steps animate in at <code>duration-500</code> (0.5s). The survey is advanced repeatedly, step after step — that's the one productivity surface here. Drop to ~250–300ms so it feels responsive rather than ceremonial — <code>src/pages/Survey.tsx:309</code> ff.</li>
+        <li>💡 The page-load choreography (nav <code>0.6s</code> delay .1, header <code>0.7s</code> delay .15, then .25/.32) means content isn't settled for ~0.9s on every visit. Defensible for a first-impression landing, but consider tightening durations to ~0.4s for returning visitors — <code>src/pages/Home.tsx:73</code></li>
+      </ul>
+    </div>
+
+    <p class="perspective-section__quote"><strong>Through Emil's lens (applied selectively):</strong> On a marketing landing, expressive motion earns its place — but the two surfaces that aren't marketing (the CTAs you click and the survey form you grind through) deserve restraint: stop the CTAs pulsing forever, and make the form steps fast.</p>
+  </section>
+
+  <!-- ════════════════ COMBINED RECOMMENDATIONS ════════════════ -->
+  <section class="recommendations" id="critical-findings">
+    <h2>🔴 Critical (Must Fix)</h2>
+    <table>
+      <thead><tr><th>Issue</th><th>File</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong> · framer-motion ignores <code>prefers-reduced-motion</code> (CSS guard covers CSS only)</td>
+          <td><code>src/App.tsx</code> / <code>main.tsx</code></td>
+          <td>Wrap the app in <code>&lt;MotionConfig reducedMotion="user"&gt;</code> (or <code>useReducedMotion()</code> per component)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="recommendations" id="important-findings">
+    <h2>🟡 Important (Should Fix)</h2>
+    <table>
+      <thead><tr><th>Issue</th><th>File</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>2</strong> · Survey overlays &amp; steps snap out (enter-only <code>animate-in</code>)</td>
+          <td><code>Survey.tsx:826, 813, 309</code></td>
+          <td>Wrap in <code>AnimatePresence</code> / Radix Dialog; add a subtler exit</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong> · <code>whileInView</code> re-animates on every scroll</td>
+          <td><code>AppPromo.tsx:278</code></td>
+          <td>Add <code>viewport={{ once: true }}</code> to match the others</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong> · Infinite gradient shimmer on ~14 headings sitewide</td>
+          <td><code>index.css:198</code></td>
+          <td>Make it a one-shot (shimmer once / hero-only), settle to static gradient</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong> · Pulsing CTA glows (breathing CTAs)</td>
+          <td><code>index.css:225, 234</code></td>
+          <td>Move glow to <code>:hover</code>/<code>:focus-visible</code> or one-shot on mount</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="recommendations" id="opportunity-findings">
+    <h2>🟢 Opportunities (Could Enhance)</h2>
+    <table>
+      <thead><tr><th>Enhancement</th><th>Where</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Celebration on survey-complete (confetti / check-draw)</td><td><code>Survey.tsx:170</code></td><td>Rewards the earned, rare finish moment</td></tr>
+        <tr><td>Carry the springy overshoot curve into per-step "done" checks</td><td><code>Survey.tsx</code> / <code>Splash.tsx:44</code></td><td>Ties splash + form personality together</td></tr>
+        <tr><td>Tighten survey step transitions <code>duration-500</code> → ~300ms</td><td><code>Survey.tsx:309</code> ff.</td><td>Form feels responsive, not ceremonial</td></tr>
+        <tr><td>Tighten page-load choreography for repeat visitors</td><td><code>Home.tsx:73</code></td><td>Faster time-to-content on return</td></tr>
+        <tr><td>Export the spring ease as a shared const (framer-motion sites)</td><td><code>AppPromo.tsx</code> ff.</td><td>Prevents easing drift across components</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="reference-summary">
+    <h2>Lens Reference Summary</h2>
+    <p><strong>Which lens was referenced most:</strong> Jakub Krehel — Production Polish (with Jhey close behind)</p>
+    <p><strong>Why:</strong> It's a shipped, repeatedly-visited marketing surface, so "is this production-ready and accessible?" leads — but you weighted Jhey up because it's a teen-facing landing where delight is the point, so the shimmer/CTA findings are framed as <em>concentrate the delight</em> rather than <em>remove it</em>, and Emil's restraint is applied selectively to the two non-marketing surfaces (CTAs, survey form).</p>
+    <p><strong>If you want to lean differently:</strong></p>
+    <ul>
+      <li><strong>To follow Jakub more strictly:</strong> add <code>MotionConfig</code>, give every conditional render an <code>AnimatePresence</code> exit, and add <code>once:true</code> to all reveals.</li>
+      <li><strong>To follow Jhey more strictly:</strong> keep the shimmer/glows but make each a deliberate one-shot moment, and build the survey-complete celebration into a signature beat.</li>
+      <li><strong>To follow Emil more strictly:</strong> kill the infinite loops outright, drop entrance durations under 300ms, and remove on-mount choreography for returning visitors.</li>
+    </ul>
+  </section>
+
+</body>
+</html>
